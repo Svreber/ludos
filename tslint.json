@@ -9,11 +9,33 @@
     ]
   },
   "rules": {
-    "quotemark": [true, "single"],
-    "indent": [true, "spaces", 2],
-    "interface-name": false,
+    "array-type": [
+      true,
+      "generic"
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "arrow-parens": false,
+    "interface-name": true,
+    "member-access": [true, "no-public"],
+    "member-ordering": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "no-consecutive-blank-lines": false
+    "no-consecutive-blank-lines": true,
+    "trailing-comma": false,
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter"
+    ],
+    "semicolon": [true, "always"]
   }
 }
