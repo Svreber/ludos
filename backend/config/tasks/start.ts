@@ -5,5 +5,5 @@ nodemon({
     watch: ['src'],
     exec: 'ts-node',
     script: 'src/index',
-//    args: args // FIXME: Not very safe
+    //    args: args // FIXME: Not very safe
 });
