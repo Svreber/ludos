@@ -1,5 +1,5 @@
 import { BoardgameInput } from './dto/boardgame.input';
-import { Boardgame } from './model/boardgame.object';
+import { Boardgame } from './model/boardgame.output';
 import { BoardgameService } from './boardgame.service';
 import { Resolver, Query, Arg, Mutation } from 'nest-type-graphql';
 
