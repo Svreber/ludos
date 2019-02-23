@@ -2,7 +2,7 @@ import { LudosConnection } from './../database.provider';
 import { BoardgameEntity } from './../entities/boardgame.entity';
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
-import { Boardgame } from '../../modules/boardgame/model/boardgame.object';
+import { Boardgame } from '../../modules/boardgame/model/boardgame.output';
 import { BoardgameInput } from '../../modules/boardgame/dto/boardgame.input';
 
 @EntityRepository(BoardgameEntity)
@@ -22,7 +22,7 @@ export class BoardgameRepository extends Repository<BoardgameEntity> {
   }
 
   // Maybe move this in a ConvertBoardgame class
-  public convertEntityToObject(boardgameEntity: BoardgameEntity): Boardgame {
+  public convertEntityToOutput(boardgameEntity: BoardgameEntity): Boardgame {
     let boardgame = new Boardgame();
     boardgame.id = boardgameEntity.id;
     boardgame.name = boardgameEntity.name;

@@ -2,7 +2,7 @@ import { ObjectType, Field, ID } from 'nest-type-graphql';
 
 @ObjectType()
 export class Boardgame {
-  private _type = 'object';
+  private _type = 'output';
 
   @Field(type => ID)
   id?: number;

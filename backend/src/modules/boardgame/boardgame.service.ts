@@ -11,17 +11,17 @@ export class BoardgameService {
   async save(boardgameInput: BoardgameInput): Promise<Boardgame> {
     let boardgameEntity = this.boardgameRepository.convertInputToEntity(boardgameInput);
     boardgameEntity = await this.boardgameRepository.save(boardgameEntity);
-    return this.boardgameRepository.convertEntityToObject(boardgameEntity);
+    return this.boardgameRepository.convertEntityToOutput(boardgameEntity);
   }
 
   async get(id: number): Promise<Boardgame> {
     let boardgameEntity = await this.boardgameRepository.findOne(id);
-    return this.boardgameRepository.convertEntityToObject(boardgameEntity);
+    return this.boardgameRepository.convertEntityToOutput(boardgameEntity);
   }
 
   async getAll(): Promise<Boardgame[]> {
     let boardgameEntities = await this.boardgameRepository.find();
-    let boargames = boardgameEntities.map((boardgameEntity) => this.boardgameRepository.convertEntityToObject(boardgameEntity));
+    let boargames = boardgameEntities.map((boardgameEntity) => this.boardgameRepository.convertEntityToOutput(boardgameEntity));
     return boargames;
   }
 }
