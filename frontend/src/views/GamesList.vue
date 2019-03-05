@@ -2,23 +2,10 @@
   <div class="games-list">
 
     <game-card :game="game"
+               :key="game.id"
                v-for="game in games">
     </game-card>
 
-    <!--<table>-->
-      <!--<tr>-->
-        <!--<th>Name</th>-->
-        <!--<th>Players</th>-->
-        <!--<th>Play time</th>-->
-        <!--<th></th>-->
-      <!--</tr>-->
-      <!--<tr v-for="game in games">-->
-        <!--<td><a :href="'https://boardgamegeek.com/boardgame/' + game.bggId">{{game.name}}</a></td>-->
-        <!--<td>{{game.playersCountMin}}-{{game.playersCountMax || '&infin;'}}</td>-->
-        <!--<td>{{game.playTimeMin}}-{{game.playTimeMax}}</td>-->
-        <!--<td @click="getData(game)">CLICK</td>-->
-      <!--</tr>-->
-    <!--</table>-->
   </div>
 </template>
 
@@ -36,8 +23,11 @@
     games: Array<IGame> = [];
 
     created(): void {
-      GamesService.queryGames()
-        .then(games => this.games = games);
+      this.initializeGames();
+    }
+
+    private async initializeGames(): Promise<void> {
+       this.games = await GamesService.queryGames();
     }
   }
 
