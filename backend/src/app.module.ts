@@ -1,14 +1,17 @@
+import { ApolloModule } from './modules/graphql/graphql.module';
 import { Module, MiddlewareConsumer } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { expressLoggerToConsole, expressLoggerToFile } from './core/middleware/logger.middleware';
 import { responseHeaders } from './core/middleware/response-header.middleware';
 import * as express from 'express'
+import { BoardgameModule } from './modules/boardgame/boardgame.module';
+import { InfrastructureModule } from './infrastructure/infrastructure.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ApolloModule,
+    BoardgameModule,
+    InfrastructureModule
+  ]
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
@@ -20,5 +23,5 @@ export class AppModule {
         responseHeaders
       ] as any)
       .forRoutes('*');
-    }
+  }
 }

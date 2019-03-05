@@ -1,3 +1,5 @@
 yarn.lock
 node_modules
 logs
+ludos.sqlite3
+schema.gql
