@@ -28,4 +28,27 @@ export class GamesService {
     return axios.post<IGraphqlResponse<IGamesResponse>>('http://localhost:3000/graphql', {query})
         .then(response => response.data.data.boardgames);
   }
+
+  static async saveGame(game: IGame): Promise<void> {
+    const query = `
+      mutation {
+        createBoardgame(boardgameInput: {
+          name: "${game.name}",
+          buyDate: "${game.buyDate}",
+          playersCountMax: ${game.playersCountMax},
+          playersCountMin: ${game.playersCountMin},
+          playTimeMin: ${game.playTimeMax},
+          playTimeMax: ${game.playTimeMin},
+          bggId: ${game.bggId},
+          urlTT: "${game.urlTT}"
+        }) {
+          id,
+          name
+        }
+      }
+    `;
+
+    return axios.post<void>('http://localhost:3000/graphql', {query})
+        .then(response => response.data);
+  }
 }
