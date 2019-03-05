@@ -4,6 +4,10 @@ import router from './router';
 
 import '@/components/components.ts';
 
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+Vue.use(Antd);
+
 Vue.config.productionTip = false;
 
 new Vue({

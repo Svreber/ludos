@@ -3,6 +3,8 @@
 
     Create a new game.
 
+    <a-button type="primary">Primary</a-button>
+
   </div>
 </template>
 

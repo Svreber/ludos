@@ -1,37 +1,36 @@
 <template>
   <div class="game-card">
+    <a-card :title="game.name">
 
-    <img height="100"
-         width="100"
-         v-if="image"
-         :src="image"/>
+      <img height="100"
+           width="100"
+           v-if="image"
+           :src="image">
 
-    <div class="name">
-      {{game.name}}
-    </div>
+      <div class="play-time">
+        <font-awesome-icon class="icon" icon="clock"/>
+        {{game.playTimeMin}} - {{game.playTimeMax}}
+      </div>
 
-    <div class="play-time">
-      <font-awesome-icon class="icon" icon="clock"/>
-      {{game.playTimeMin}} - {{game.playTimeMax}}
-    </div>
+      <div class="players-count">
+        <font-awesome-icon class="icon" icon="users"/>
+        {{game.playersCountMin}} - {{game.playersCountMax}}
+      </div>
 
-    <div class="players-count">
-      <font-awesome-icon class="icon" icon="users"/>
-      {{game.playersCountMin}} - {{game.playersCountMax}}
-    </div>
+    </a-card>
   </div>
 </template>
 
 <script lang="ts">
-  import {Component, Prop, Vue} from 'vue-property-decorator';
-  import {IGame} from '@/interfaces/IGame';
-  import {BGGService} from '@/services/bgg.service';
+  import { Component, Prop, Vue } from "vue-property-decorator";
+  import { IGame } from "@/interfaces/IGame";
+  import { BGGService } from "@/services/bgg.service";
 
   @Component({
     name: GameCard.tag
   })
   export class GameCard extends Vue {
-    static tag = 'GameCard';
+    static tag = "GameCard";
 
     @Prop()
     game!: IGame;
@@ -51,15 +50,13 @@
 
 <style lang="scss" scoped>
   .game-card {
-    border: 1px solid lightgrey;
     display: inline-block;
-    padding: 1rem;
     text-align: center;
 
     .name {
       font-size: large;
       font-weight: bold;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
 
     .play-time,
@@ -68,7 +65,7 @@
     }
 
     .icon {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 </style>
