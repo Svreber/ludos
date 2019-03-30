@@ -23,4 +23,9 @@ export class BoardgameResolver {
   async createBoardgame(@Args('boardgameInput') boardgameInput: BoardgameInput): Promise<Boardgame> {
     return this.boardgameService.save(boardgameInput);
   }
+
+  @Mutation(returns => Boardgame, { name: 'deleteBoardgame' })
+  async deleteBoardgame(@Args('id') id: number): Promise<Boardgame> {
+    return this.boardgameService.delete(id);
+  }
 }

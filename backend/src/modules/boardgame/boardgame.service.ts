@@ -1,8 +1,9 @@
 import { Boardgame } from './model/boardgame.output';
 import { BoardgameRepository } from '../../infrastructure/repositories/boardgame.repository';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BoardgameInput } from './dto/boardgame.input';
 import { BoardgameConverter } from "../../infrastructure/converters/boardgame.converter";
+import { throwIfUndefined } from "../../core/utils/helpers";
 
 @Injectable()
 export class BoardgameService {
@@ -17,6 +18,7 @@ export class BoardgameService {
 
   async get(id: number): Promise<Boardgame> {
     let boardgameEntity = await this.boardgameRepository.findOne(id);
+    throwIfUndefined(boardgameEntity, new NotFoundException());
     return BoardgameConverter.entityToOutput(boardgameEntity);
   }
 
@@ -24,5 +26,13 @@ export class BoardgameService {
     let boardgameEntities = await this.boardgameRepository.find();
     let boargames = boardgameEntities.map((boardgameEntity) => BoardgameConverter.entityToOutput(boardgameEntity));
     return boargames;
+  }
+
+  async delete(id: number): Promise<any> {
+    let boardgameEntity = await this.boardgameRepository.findOne(id);
+    throwIfUndefined(boardgameEntity, new NotFoundException());
+    let boardgameOuput = await BoardgameConverter.entityToOutput(boardgameEntity);
+    await this.boardgameRepository.delete(boardgameEntity);
+    return boardgameOuput;
   }
 }
