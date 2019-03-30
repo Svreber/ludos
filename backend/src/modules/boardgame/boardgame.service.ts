@@ -1,5 +1,5 @@
 import { Boardgame } from './model/boardgame.output';
-import { BoardgameRepository } from './../../infrastructure/repositories/boardgame.repository';
+import { BoardgameRepository } from '../../infrastructure/repositories/boardgame.repository';
 import { Injectable } from '@nestjs/common';
 import { BoardgameInput } from './dto/boardgame.input';
 

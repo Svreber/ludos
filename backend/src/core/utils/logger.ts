@@ -42,7 +42,7 @@ export const consoleFormat = winston.format.combine(
   winston.format.timestamp(),
   winston.format.colorize(),
   displayFormat
-)
+);
 
 export const consoleTransport =  new winston.transports.Console({
   format: consoleFormat
