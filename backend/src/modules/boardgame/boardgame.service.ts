@@ -35,4 +35,12 @@ export class BoardgameService {
     await this.boardgameRepository.delete(boardgameEntity);
     return boardgameOuput;
   }
+
+  async update(id: number, boardgameInput: BoardgameInput): Promise<Boardgame> {
+    let boardgameEntityOld = await this.boardgameRepository.findOne(id);
+    throwIfUndefined(boardgameEntityOld, new NotFoundException());
+    let boardgameEntityUpdated = Object.assign(boardgameEntityOld, BoardgameConverter.inputToEntity(boardgameInput));
+    boardgameEntityUpdated = await this.boardgameRepository.save(boardgameEntityUpdated);
+    return BoardgameConverter.entityToOutput(boardgameEntityUpdated);
+  }
 }
