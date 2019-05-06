@@ -6,8 +6,8 @@ import { Module } from '@nestjs/common';
 // Setup of the database
 
 @Module({
-    providers: [LudosConnectionProvider, BoardgameRepositoryProvider],
-    exports: [LudosConnectionProvider, BoardgameRepositoryProvider]
+  providers: [LudosConnectionProvider, BoardgameRepositoryProvider],
+  exports: [LudosConnectionProvider, BoardgameRepositoryProvider]
 })
 export class InfrastructureModule {
 }
