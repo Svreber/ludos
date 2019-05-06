@@ -25,6 +25,7 @@
     ],
     "arrow-parens": false,
     "interface-name": true,
+    "max-line-length": [true, {"limit": 200, "ignore-pattern": "^import |^export {(.*?)}"}]
     "member-access": [true, "no-public"],
     "member-ordering": false,
     "ordered-imports": false,

@@ -86,9 +86,9 @@
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
-  import {GamesService} from '@/services/games.service';
+  import {GamesService} from '@/services/GamesService';
   import {INonPersistedGame} from '@/interfaces/IGame';
-  import {RouterService} from '@/services/Router.service';
+  import {RouterService} from '@/services/RouterService';
 
   @Component({
     name: CreateGame.tag

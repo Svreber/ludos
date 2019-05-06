@@ -1,6 +1,8 @@
 <template>
   <div class="games-list">
 
+    <a-button @click="goToGameCreation()">Add new game</a-button>
+
     <div class="games-container">
       <game-card :game="game"
                  :key="game.id"
@@ -8,16 +10,14 @@
       </game-card>
     </div>
 
-    <a-button @click="goToGameCreation()">Add new game</a-button>
-
   </div>
 </template>
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
-  import {GamesService} from '@/services/games.service';
+  import {GamesService} from '@/services/GamesService';
   import {IGame} from '@/interfaces/IGame';
-  import {RouterService} from '@/services/Router.service';
+  import {RouterService} from '@/services/RouterService';
 
   @Component({
     name: GamesList.tag

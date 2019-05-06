@@ -2,20 +2,19 @@
   <div class="game-card">
     <a-card :title="game.name">
 
-      <img height="100"
-           width="100"
-           v-if="image"
-           :src="image">
+      <game-image-display class="game-image"
+                          :game="game">
+      </game-image-display>
 
-      <div class="play-time">
-        <font-awesome-icon class="icon" icon="clock"/>
-        {{game.playTimeMin}} - {{game.playTimeMax}}
-      </div>
+      <play-time-display class="play-time"
+                         :play-time-max="game.playTimeMax"
+                         :play-time-min="game.playTimeMin">
+      </play-time-display>
 
-      <div class="players-count">
-        <font-awesome-icon class="icon" icon="users"/>
-        {{game.playersCountMin}} - {{game.playersCountMax}}
-      </div>
+      <players-count-display class="players-count"
+                             :players-count-max="game.playersCountMax"
+                             :players-count-min="game.playersCountMin">
+      </players-count-display>
 
     </a-card>
   </div>
@@ -24,7 +23,6 @@
 <script lang="ts">
   import {Component, Prop, Vue} from 'vue-property-decorator';
   import {IGame} from '@/interfaces/IGame';
-  import {BGGService} from '@/services/bgg.service';
 
   @Component({
     name: GameCard.tag
@@ -34,15 +32,6 @@
 
     @Prop()
     game!: IGame;
-    image: string | null = null;
-
-    created(): void {
-      this.initializeImage();
-    }
-
-    async initializeImage(): Promise<void> {
-      this.image = await BGGService.getImageForGame(this.game.bggId);
-    }
   }
 
   export default GameCard;
@@ -59,17 +48,13 @@
       font-weight: bold;
     }
 
-    img {
+    .game-image {
       margin-bottom: 1rem;
     }
 
     .play-time,
     .players-count {
       color: grey;
-    }
-
-    .icon {
-      margin-right: 0.5rem;
     }
   }
 </style>

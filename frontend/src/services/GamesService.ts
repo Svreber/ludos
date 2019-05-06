@@ -5,6 +5,9 @@ import {IGamesResponse} from '@/interfaces/IGamesResponse';
 
 export class GamesService {
 
+  static API_URL: string = 'http://localhost:3000';
+  static GRAPHQL_URL: string = GamesService.API_URL + '/graphql';
+
   private constructor() {
   }
 
@@ -25,7 +28,7 @@ export class GamesService {
       }
     `;
 
-    return axios.post<IGraphqlResponse<IGamesResponse>>('http://localhost:3000/graphql', {query})
+    return axios.post<IGraphqlResponse<IGamesResponse>>(GamesService.GRAPHQL_URL, {query})
         .then(response => response.data.data.boardgames);
   }
 
@@ -35,8 +38,8 @@ export class GamesService {
         createBoardgame(boardgameInput: {
           name: "${game.name}",
           buyDate: "${game.buyDate}",
-          playersCountMax: ${game.playersCountMax},
           playersCountMin: ${game.playersCountMin},
+          playersCountMax: ${game.playersCountMax},
           playTimeMin: ${game.playTimeMin},
           playTimeMax: ${game.playTimeMax},
           bggId: ${game.bggId},
@@ -48,7 +51,7 @@ export class GamesService {
       }
     `;
 
-    return axios.post<void>('http://localhost:3000/graphql', {query})
+    return axios.post<void>(GamesService.GRAPHQL_URL, {query})
         .then(response => response.data);
   }
 }
