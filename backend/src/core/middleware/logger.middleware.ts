@@ -1,7 +1,8 @@
-
 import { consoleTransport, fileCombinedTransport, fileErrorTransport } from '../utils/logger';
 import { Request, Response } from 'express';
-import {isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
+import { GraphQLParams } from "../utils/GraphQLParams";
+
 const expressWinston = require('express-winston');
 
 const config = {
@@ -22,10 +23,20 @@ export const expressLoggerToConsole = expressWinston.logger({
   msg: (req: Request, res: Response) => {
     let message = `${req.method} ${req.url} ${res.statusCode} ${(res as any).responseTime}ms`;
 
-    if (!isEmpty(req.body)) {
-      message = message + "\n" + JSON.stringify(req.body, null, 2);
+    if (isGraphQLPostRequest(req)) {
+      message = message + "\n" + prettyPrintGraphlQLPostRequest(req.body);
     }
 
     return message;
   }
 });
+
+function isGraphQLPostRequest(req: Request): boolean {
+  // FIXME: Do something more beautiful
+  return !isEmpty(req.body) && req.url.endsWith('/graphql') && req.method === 'POST';
+}
+
+function prettyPrintGraphlQLPostRequest(body: GraphQLParams): string {
+  // FIXME: Do something more beautiful
+  return JSON.stringify(body, null, 2);
+}

@@ -1,5 +1,5 @@
-import { LudosConnection } from './../database.provider';
-import { BoardgameEntity } from './../entities/boardgame.entity';
+import { LudosConnection } from '../database.provider';
+import { BoardgameEntity } from '../entities/boardgame.entity';
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Boardgame } from '../../modules/boardgame/model/boardgame.output';

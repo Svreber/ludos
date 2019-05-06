@@ -1,4 +1,4 @@
-import { ApolloModule } from './modules/graphql/graphql.module';
+import { GraphqlModule } from './modules/graphql/graphql.module';
 import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { expressLoggerToConsole, expressLoggerToFile } from './core/middleware/logger.middleware';
 import { responseHeaders } from './core/middleware/response-header.middleware';
@@ -8,7 +8,7 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
 
 @Module({
   imports: [
-    ApolloModule,
+    GraphqlModule,
     BoardgameModule,
     InfrastructureModule
   ]
