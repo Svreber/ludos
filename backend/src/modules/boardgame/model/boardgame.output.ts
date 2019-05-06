@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from 'nest-type-graphql';
+import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
 export class Boardgame {

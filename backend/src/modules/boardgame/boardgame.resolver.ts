@@ -1,16 +1,16 @@
 import { BoardgameInput } from './dto/boardgame.input';
 import { Boardgame } from './model/boardgame.output';
 import { BoardgameService } from './boardgame.service';
-import { Resolver, Query, Arg, Mutation } from 'nest-type-graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 
-@Resolver(type => Boardgame)
+@Resolver(Boardgame)
 export class BoardgameResolver {
 
   constructor(private boardgameService: BoardgameService) {
   }
 
   @Query(returns => Boardgame, { name: 'boardgame' })
-  async getBoardgame(@Arg('id') id: number): Promise<Boardgame> {
+  async getBoardgame(@Args('id') id: number): Promise<Boardgame> {
     return this.boardgameService.get(id);
   }
 
@@ -20,7 +20,17 @@ export class BoardgameResolver {
   }
 
   @Mutation(returns => Boardgame, { name: 'createBoardgame' })
-  async createBoardgame(@Arg('boardgameInput') boardgameInput: BoardgameInput): Promise<Boardgame> {
+  async createBoardgame(@Args('boardgameInput') boardgameInput: BoardgameInput): Promise<Boardgame> {
     return this.boardgameService.save(boardgameInput);
+  }
+
+  @Mutation(returns => Boardgame, { name: 'deleteBoardgame' })
+  async deleteBoardgame(@Args('id') id: number): Promise<Boardgame> {
+    return this.boardgameService.delete(id);
+  }
+
+  @Mutation(returns => Boardgame, { name: 'updateBoardgame' })
+  async updateBoardgame(@Args('id') id: number, @Args('boardgameInput') boardgameInput: BoardgameInput): Promise<Boardgame> {
+    return this.boardgameService.update(id, boardgameInput);
   }
 }

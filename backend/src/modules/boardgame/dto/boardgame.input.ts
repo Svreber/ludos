@@ -1,5 +1,4 @@
-import { Field } from 'nest-type-graphql';
-import { InputType } from 'type-graphql';
+import { InputType, Field } from 'type-graphql';
 import { IsString, IsNotEmpty, IsNumber, IsPositive, IsUrl } from 'class-validator';
 
 @InputType()
@@ -10,7 +9,7 @@ export class BoardgameInput {
   @IsString()
   @IsNotEmpty()
   name: string;
-  
+
   @Field()
   @IsString()
   @IsNotEmpty()

@@ -1,5 +1,4 @@
-import { logger } from './../core/utils/logger';
-import { SnakeNamingStrategy } from './../core/utils/snake-naming-strategy';
+import { SnakeNamingStrategy } from '../core/utils/snake-naming-strategy';
 import { BoardgameEntity } from './entities/boardgame.entity';
 import { createConnection, Connection } from 'typeorm';
 

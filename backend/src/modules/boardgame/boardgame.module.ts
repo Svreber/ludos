@@ -1,4 +1,4 @@
-import { InfrastructureModule } from './../../infrastructure/infrastructure.module';
+import { InfrastructureModule } from '../../infrastructure/infrastructure.module';
 import { Module } from '@nestjs/common';
 import { BoardgameService } from './boardgame.service';
 import { BoardgameResolver } from './boardgame.resolver';
