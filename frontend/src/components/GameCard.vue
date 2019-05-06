@@ -22,15 +22,15 @@
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from "vue-property-decorator";
-  import { IGame } from "@/interfaces/IGame";
-  import { BGGService } from "@/services/bgg.service";
+  import {Component, Prop, Vue} from 'vue-property-decorator';
+  import {IGame} from '@/interfaces/IGame';
+  import {BGGService} from '@/services/bgg.service';
 
   @Component({
     name: GameCard.tag
   })
   export class GameCard extends Vue {
-    static tag = "GameCard";
+    static tag = 'GameCard';
 
     @Prop()
     game!: IGame;
@@ -51,12 +51,16 @@
 <style lang="scss" scoped>
   .game-card {
     display: inline-block;
+    margin: .5rem;
     text-align: center;
 
     .name {
       font-size: large;
       font-weight: bold;
-      margin-bottom: 0.5rem;
+    }
+
+    img {
+      margin-bottom: 1rem;
     }
 
     .play-time,

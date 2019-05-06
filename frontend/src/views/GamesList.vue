@@ -1,10 +1,14 @@
 <template>
   <div class="games-list">
 
-    <game-card :game="game"
-               :key="game.id"
-               v-for="game in games">
-    </game-card>
+    <div class="games-container">
+      <game-card :game="game"
+                 :key="game.id"
+                 v-for="game in games">
+      </game-card>
+    </div>
+
+    <a-button @click="goToGameCreation()">Add new game</a-button>
 
   </div>
 </template>
@@ -13,6 +17,7 @@
   import {Component, Vue} from 'vue-property-decorator';
   import {GamesService} from '@/services/games.service';
   import {IGame} from '@/interfaces/IGame';
+  import {RouterService} from '@/services/Router.service';
 
   @Component({
     name: GamesList.tag
@@ -27,7 +32,11 @@
     }
 
     private async initializeGames(): Promise<void> {
-       this.games = await GamesService.queryGames();
+      this.games = await GamesService.queryGames();
+    }
+
+    goToGameCreation(): void {
+      RouterService.goToGameCreation();
     }
   }
 
@@ -36,5 +45,9 @@
 
 <style lang="scss" scoped>
   .games-list {
+
+    .games-container {
+      margin: 20px;
+    }
   }
 </style>

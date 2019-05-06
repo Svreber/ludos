@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {IGame} from '@/interfaces/IGame';
+import {IGame, INonPersistedGame} from '@/interfaces/IGame';
 import {IGraphqlResponse} from '@/interfaces/IGraphqlResponse';
 import {IGamesResponse} from '@/interfaces/IGamesResponse';
 
@@ -29,7 +29,7 @@ export class GamesService {
         .then(response => response.data.data.boardgames);
   }
 
-  static async saveGame(game: IGame): Promise<void> {
+  static async saveGame(game: INonPersistedGame): Promise<void> {
     const query = `
       mutation {
         createBoardgame(boardgameInput: {
@@ -37,8 +37,8 @@ export class GamesService {
           buyDate: "${game.buyDate}",
           playersCountMax: ${game.playersCountMax},
           playersCountMin: ${game.playersCountMin},
-          playTimeMin: ${game.playTimeMax},
-          playTimeMax: ${game.playTimeMin},
+          playTimeMin: ${game.playTimeMin},
+          playTimeMax: ${game.playTimeMax},
           bggId: ${game.bggId},
           urlTT: "${game.urlTT}"
         }) {
