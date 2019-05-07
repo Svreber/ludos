@@ -6,14 +6,14 @@
       <a-form-item>
         <a-input v-model="searchParams.name"
                  placeholder="Search for a game"
-                 @change="onChange"/>
+                 @change="initializeGames()"/>
       </a-form-item>
 
       <a-form-item>
         <a-input-number :min="1"
                         :max="20"
                         v-model="searchParams.playersCount"
-                        @change="onChange"/>
+                        @change="initializeGames()"/>
       </a-form-item>
 
       <a-form-item>
@@ -23,6 +23,8 @@
       <a-form-item>
         <a-button @click="editGames()">Edit</a-button>
       </a-form-item>
+
+      <games-import @change="initializeGames()"></games-import>
 
     </a-form>
 
