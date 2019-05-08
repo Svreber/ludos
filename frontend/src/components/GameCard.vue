@@ -44,7 +44,7 @@
     @Prop()
     showActions!: boolean;
 
-    async deleteGame(): void {
+    async deleteGame(): Promise<void> {
       await GamesService.deleteGame(this.game);
       this.$emit('change');
     }

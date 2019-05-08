@@ -62,7 +62,7 @@ export class GamesService {
     }, Promise.resolve());
   }
 
-  static deleteGame(game: IGame) {
+  static deleteGame(game: IGame): Promise<void> {
     const query = `
       mutation {
         deleteBoardgame(id: ${game.id}) {
