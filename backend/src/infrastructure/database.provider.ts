@@ -1,6 +1,7 @@
 import { SnakeNamingStrategy } from '../core/utils/snake-naming-strategy';
 import { BoardgameEntity } from './entities/boardgame.entity';
 import { createConnection, Connection } from 'typeorm';
+import { LanguageEntity } from './entities/language.entity';
 
 export class LudosConnection extends Connection {
 }
@@ -13,7 +14,8 @@ export const LudosConnectionProvider = {
     type: 'sqlite',
     database: 'ludos.sqlite3',
     entities: [
-      BoardgameEntity
+      BoardgameEntity,
+      LanguageEntity
     ],
     namingStrategy: new SnakeNamingStrategy(),
     synchronize: true

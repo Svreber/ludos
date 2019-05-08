@@ -1,36 +1,36 @@
 import { BoardgameInput } from './dto/boardgame.input';
-import { Boardgame } from './model/boardgame.output';
+import { BoardgameOutput } from './model/boardgame.output';
 import { BoardgameService } from './boardgame.service';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 
-@Resolver(Boardgame)
+@Resolver(BoardgameOutput)
 export class BoardgameResolver {
 
   constructor(private boardgameService: BoardgameService) {
   }
 
-  @Query(returns => Boardgame, { name: 'boardgame' })
-  async getBoardgame(@Args('id') id: number): Promise<Boardgame> {
+  @Query(returns => BoardgameOutput, { name: 'boardgame' })
+  async getBoardgame(@Args('id') id: number): Promise<BoardgameOutput> {
     return this.boardgameService.get(id);
   }
 
-  @Query(returns => [Boardgame], { name: 'boardgames' })
-  async getBoardgames(): Promise<Boardgame[]> {
+  @Query(returns => [BoardgameOutput], { name: 'boardgames' })
+  async getBoardgames(): Promise<BoardgameOutput[]> {
     return this.boardgameService.getAll();
   }
 
-  @Mutation(returns => Boardgame, { name: 'createBoardgame' })
-  async createBoardgame(@Args('boardgameInput') boardgameInput: BoardgameInput): Promise<Boardgame> {
+  @Mutation(returns => BoardgameOutput, { name: 'createBoardgame' })
+  async createBoardgame(@Args('boardgameInput') boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
     return this.boardgameService.save(boardgameInput);
   }
 
-  @Mutation(returns => Boardgame, { name: 'deleteBoardgame' })
-  async deleteBoardgame(@Args('id') id: number): Promise<Boardgame> {
+  @Mutation(returns => BoardgameOutput, { name: 'deleteBoardgame' })
+  async deleteBoardgame(@Args('id') id: number): Promise<BoardgameOutput> {
     return this.boardgameService.delete(id);
   }
 
-  @Mutation(returns => Boardgame, { name: 'updateBoardgame' })
-  async updateBoardgame(@Args('id') id: number, @Args('boardgameInput') boardgameInput: BoardgameInput): Promise<Boardgame> {
+  @Mutation(returns => BoardgameOutput, { name: 'updateBoardgame' })
+  async updateBoardgame(@Args('id') id: number, @Args('boardgameInput') boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
     return this.boardgameService.update(id, boardgameInput);
   }
 }
