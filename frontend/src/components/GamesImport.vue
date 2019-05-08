@@ -26,12 +26,12 @@
 
     isUploading: boolean = false;
 
-    dummyRequest() {
+    dummyRequest(): void {
       // Required to avoid the upload component to throw some http request
       // https://medium.com/@mattcroak718/managing-file-uploads-with-ant-design-6d78e592f2c4
     }
 
-    async parseFile(arg: {file: {originFileObj: File}}): void {
+    async parseFile(arg: {file: {originFileObj: File}}): Promise<void> {
       this.isUploading = true;
       await BatchService.parseCsv(arg.file.originFileObj);
       this.isUploading = false;

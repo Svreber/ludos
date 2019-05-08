@@ -25,7 +25,7 @@ export class BatchService {
     try {
       const uploadedGames = await BatchService.parseGamesFile(file);
       return GamesService.saveAllGames(uploadedGames);
-    } catch(error) {
+    } catch (error) {
       throw new Error(error);
     }
   }
