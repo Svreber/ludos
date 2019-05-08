@@ -17,14 +17,22 @@
       </a-form-item>
 
       <a-form-item>
-        <a-button @click="goToGameCreation()">Add new game</a-button>
+        <a-button @click="goToGameCreation()">
+          <a-icon type="plus"></a-icon>
+          Add new game
+        </a-button>
       </a-form-item>
 
       <a-form-item>
-        <a-button @click="editGames()">Edit</a-button>
+        <games-import @change="initializeGames()"></games-import>
       </a-form-item>
 
-      <games-import @change="initializeGames()"></games-import>
+      <a-form-item>
+        <a-button @click="editGames()">
+          <a-icon type="edit"></a-icon>
+          Edit
+        </a-button>
+      </a-form-item>
 
     </a-form>
 
