@@ -24,9 +24,19 @@ export class BoardgameResolver {
     return this.boardgameService.save(boardgameInput);
   }
 
+  @Mutation(returns => [BoardgameOutput], { name: 'createBoardgames' })
+  async createBoardgames(@Args({ name: 'boardgameInputs', type: () => [BoardgameInput] }) boardgameInputs: BoardgameInput[]): Promise<BoardgameOutput[]> {
+    return this.boardgameService.saveBatch(boardgameInputs);
+  }
+
   @Mutation(returns => BoardgameOutput, { name: 'deleteBoardgame' })
   async deleteBoardgame(@Args('id') id: number): Promise<BoardgameOutput> {
     return this.boardgameService.delete(id);
+  }
+
+  @Mutation(returns => [BoardgameOutput], { name: 'deleteBoardgames' })
+  async deleteBoardgames(@Args({ name: 'ids', type: () => [Number] }) ids: number[]): Promise<BoardgameOutput[]> {
+    return this.boardgameService.deleteBatch(ids);
   }
 
   @Mutation(returns => BoardgameOutput, { name: 'updateBoardgame' })

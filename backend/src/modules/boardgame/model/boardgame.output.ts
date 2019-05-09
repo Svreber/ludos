@@ -11,7 +11,7 @@ export class BoardgameOutput {
   @Field()
   name?: string;
   
-  @Field(() => LanguageOutput)
+  @Field(() => [LanguageOutput])
   languages?: LanguageOutput[];
   
   @Field()
