@@ -1,17 +1,14 @@
-import { BoardgameRepository } from '../../infrastructure/repositories/boardgame.repository';
 import { Injectable } from '@nestjs/common';
-import { LanguageRepository } from '../../infrastructure/repositories/language.repository';
-import { Converter } from './converter';
-import { BoardgameInput } from '../../modules/boardgame/dto/boardgame.input';
-import { BoardgameOutput } from '../../modules/boardgame/model/boardgame.output';
-import { BoardgameEntity } from '../entities/boardgame.entity';
-import { LanguageConverter } from './language.converter';
-import * as _ from  'lodash';
+import { BoardgameEntity } from '../../../infrastructure/boardgame/boardgame.entity';
+import { Converter } from '../../../infrastructure/converter';
+import { LanguageRepository } from '../../../infrastructure/language/language.repository';
+import { BoardgameInput } from './boardgame.input';
+import { BoardgameOutput } from './boardgame.output';
 
 @Injectable()
 export class BoardgameConverter implements Converter<BoardgameInput, BoardgameOutput, BoardgameEntity> {
-  constructor(private languageConverter: LanguageConverter,
-              private languageRepository: LanguageRepository) {
+  
+  constructor(private languageRepository: LanguageRepository) {
   }
 
   async inputToEntity(input: BoardgameInput): Promise<BoardgameEntity> {
@@ -32,7 +29,7 @@ export class BoardgameConverter implements Converter<BoardgameInput, BoardgameOu
     let output = new BoardgameOutput();
     output.id = entity.id;
     output.name = entity.name;
-    output.languages = _.map(entity.languages, language => this.languageConverter.entityToOutput(language));
+    output.languages = null; // Fetch if needed by ResolveProperty
     output.buyDate = entity.buyDate;
     output.playTimeMin = entity.playTimeMin;
     output.playTimeMax = entity.playTimeMax;

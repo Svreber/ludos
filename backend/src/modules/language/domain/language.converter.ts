@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { LanguageRepository } from '../../infrastructure/repositories/language.repository';
-import { Converter } from './converter';
-import { LanguageOutput } from '../../modules/language/model/language.output';
-import { LanguageEntity } from '../entities/language.entity';
+import { Converter } from '../../../infrastructure/converter';
+import { LanguageEntity } from '../../../infrastructure/language/language.entity';
+import { LanguageOutput } from './language.output';
 
 @Injectable()
 export class LanguageConverter implements Converter<any, LanguageOutput, LanguageEntity> {
-  constructor(private languageRepository: LanguageRepository) {
-  }
-
   async inputToEntity(input: any): Promise<LanguageEntity> {
     throw new Error("Method not implemented.");
   }

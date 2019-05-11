@@ -1,7 +1,7 @@
-import { consoleTransport, fileCombinedTransport, fileErrorTransport } from '../utils/logger';
 import { Request, Response } from 'express';
 import { isEmpty } from 'lodash';
-import { GraphQLParams } from "../utils/GraphQLParams";
+import { GraphQLParams } from '../utils/GraphQLParams';
+import { consoleTransport, fileCombinedTransport, fileErrorTransport } from '../utils/logger';
 
 const expressWinston = require('express-winston');
 
