@@ -59,7 +59,6 @@ export class BoardgameResolver {
 
   @ResolveProperty()
   async languages(@Parent() boardgameOutput: BoardgameOutput): Promise<LanguageOutput[]> {
-    console.log(boardgameOutput);
      return this.boardgameService.getLanguages(boardgameOutput.id);
   }
 }
