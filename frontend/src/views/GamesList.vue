@@ -17,6 +17,13 @@
       </a-form-item>
 
       <a-form-item>
+        <a-input-number :min="1"
+                        :max="10000"
+                        v-model="searchParams.playTime"
+                        @change="initializeGames()"/>
+      </a-form-item>
+
+      <a-form-item>
         <a-button @click="goToGameCreation()">
           <a-icon type="plus"></a-icon>
           Add new game
@@ -53,6 +60,8 @@
   import {GamesService} from '@/services/GamesService';
   import {IGame} from '@/interfaces/IGame';
   import {RouterService} from '@/services/RouterService';
+  import {GamesSearchService} from '@/services/GamesSearchService';
+  import {IGamesSearchParameters} from '@/interfaces/IGamesSearchParameters';
 
   @Component({
     name: GamesList.tag
@@ -62,14 +71,15 @@
 
     games: Array<IGame> = [];
     isEdition: boolean = false;
-    searchParams: any = {};
+    searchParams: IGamesSearchParameters = {};
 
     created(): void {
       this.initializeGames();
     }
 
     private async initializeGames(): Promise<void> {
-      this.games = await GamesService.queryGames();
+      const allGames = await GamesService.queryGames();
+      this.games = GamesSearchService.getGames(allGames, this.searchParams);
     }
 
     goToGameCreation(): void {
