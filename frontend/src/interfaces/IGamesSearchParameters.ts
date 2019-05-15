@@ -1,5 +1,6 @@
 export interface IGamesSearchParameters {
   name?: string;
-  playTime?: number;
+  playTimeMax?: number;
+  playTimeMin?: number;
   playersCount?: number;
 }

@@ -10,8 +10,12 @@ export class GamesFilteringService {
     return !GamesFilteringService.isString(name) || game.name.includes(name);
   }
 
-  static matchesPlayTime(game: IGame, playTime?: number): boolean {
-    return !GamesFilteringService.isNumber(playTime) || (playTime >= game.playTimeMin && playTime <= game.playTimeMax);
+  static matchesPlayTimeMin(game: IGame, playTimeMin?: number): boolean {
+    return !GamesFilteringService.isNumber(playTimeMin) || (game.playTimeMin >= playTimeMin);
+  }
+
+  static matchesPlayTimeMax(game: IGame, playTimeMax?: number): boolean {
+    return !GamesFilteringService.isNumber(playTimeMax) || (game.playTimeMax <= playTimeMax);
   }
 
   static matchesPlayersCount(game: IGame, playersCount?: number): boolean {

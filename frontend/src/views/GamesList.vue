@@ -4,26 +4,6 @@
     <a-form layout="inline">
 
       <a-form-item>
-        <a-input v-model="searchParams.name"
-                 placeholder="Search for a game"
-                 @change="initializeGames()"/>
-      </a-form-item>
-
-      <a-form-item>
-        <a-input-number :min="1"
-                        :max="20"
-                        v-model="searchParams.playersCount"
-                        @change="initializeGames()"/>
-      </a-form-item>
-
-      <a-form-item>
-        <a-input-number :min="1"
-                        :max="10000"
-                        v-model="searchParams.playTime"
-                        @change="initializeGames()"/>
-      </a-form-item>
-
-      <a-form-item>
         <a-button @click="goToGameCreation()">
           <a-icon type="plus"></a-icon>
           Add new game
@@ -42,6 +22,8 @@
       </a-form-item>
 
     </a-form>
+
+    <game-filters @change="initializeGames"></game-filters>
 
     <div class="games-container">
       <game-card :game="game"
@@ -71,15 +53,14 @@
 
     games: Array<IGame> = [];
     isEdition: boolean = false;
-    searchParams: IGamesSearchParameters = {};
 
     created(): void {
       this.initializeGames();
     }
 
-    private async initializeGames(): Promise<void> {
+    private async initializeGames(searchParams?: IGamesSearchParameters): Promise<void> {
       const allGames = await GamesService.queryGames();
-      this.games = GamesSearchService.getGames(allGames, this.searchParams);
+      this.games = GamesSearchService.getGames(allGames, searchParams);
     }
 
     goToGameCreation(): void {
