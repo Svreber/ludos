@@ -1,9 +1,12 @@
 import axios from 'axios';
-import {IGame} from '@/interfaces/IGame';
+import {IGame, INonPersistedGame} from '@/interfaces/IGame';
 import {IGraphqlResponse} from '@/interfaces/IGraphqlResponse';
 import {IGamesResponse} from '@/interfaces/IGamesResponse';
 
 export class GamesService {
+
+  static API_URL: string = 'http://localhost:3000';
+  static GRAPHQL_URL: string = GamesService.API_URL + '/graphql';
 
   private constructor() {
   }
@@ -25,20 +28,20 @@ export class GamesService {
       }
     `;
 
-    return axios.post<IGraphqlResponse<IGamesResponse>>('http://localhost:3000/graphql', {query})
+    return axios.post<IGraphqlResponse<IGamesResponse>>(GamesService.GRAPHQL_URL, {query})
         .then(response => response.data.data.boardgames);
   }
 
-  static async saveGame(game: IGame): Promise<void> {
+  static async saveGame(game: INonPersistedGame): Promise<void> {
     const query = `
       mutation {
         createBoardgame(boardgameInput: {
           name: "${game.name}",
           buyDate: "${game.buyDate}",
-          playersCountMax: ${game.playersCountMax},
           playersCountMin: ${game.playersCountMin},
-          playTimeMin: ${game.playTimeMax},
-          playTimeMax: ${game.playTimeMin},
+          playersCountMax: ${game.playersCountMax},
+          playTimeMin: ${game.playTimeMin},
+          playTimeMax: ${game.playTimeMax},
           bggId: ${game.bggId},
           urlTT: "${game.urlTT}"
         }) {
@@ -48,7 +51,7 @@ export class GamesService {
       }
     `;
 
-    return axios.post<void>('http://localhost:3000/graphql', {query})
+    return axios.post<void>(GamesService.GRAPHQL_URL, {query})
         .then(response => response.data);
   }
 }

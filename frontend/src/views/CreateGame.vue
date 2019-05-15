@@ -1,6 +1,8 @@
 <template>
   <div class="create-game">
 
+    <h1>Create a new game</h1>
+
     <a-form>
 
       <a-form-item label="Name"
@@ -8,7 +10,7 @@
                    :wrapper-col="{ span: 12 }">
 
         <a-input placeholder="Name"
-                v-model="game.name">
+                 v-model="game.name">
         </a-input>
 
       </a-form-item>
@@ -54,7 +56,7 @@
                    :wrapper-col="{ span: 12 }">
 
         <a-input placeholder="ID Boardgamegeek"
-                v-model="game.bggId">
+                 v-model="game.bggId">
         </a-input>
 
       </a-form-item>
@@ -64,18 +66,18 @@
                    :wrapper-col="{ span: 12 }">
 
         <a-input placeholder="URL TricTrac"
-                v-model="game.urlTT">
+                 v-model="game.urlTT">
         </a-input>
 
       </a-form-item>
 
-    <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-      <a-button @click="saveGame()"
-                html-type="submit"
-                type="primary">
-        Save
-      </a-button>
-    </a-form-item>
+      <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+        <a-button @click="saveGame()"
+                  html-type="submit"
+                  type="primary">
+          Save
+        </a-button>
+      </a-form-item>
 
     </a-form>
 
@@ -84,8 +86,9 @@
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
-  import {GamesService} from '@/services/games.service';
-  import {IGame} from '@/interfaces/IGame';
+  import {GamesService} from '@/services/GamesService';
+  import {INonPersistedGame} from '@/interfaces/IGame';
+  import {RouterService} from '@/services/RouterService';
 
   @Component({
     name: CreateGame.tag
@@ -93,14 +96,11 @@
   export class CreateGame extends Vue {
     static tag = 'CreateGame';
 
-    game: IGame | null = null;
+    game: INonPersistedGame = {};
 
-    created(): void {
-      this.game = {};
-    }
-
-    saveGame(): void {
-      GamesService.saveGame(this.game);
+    async saveGame(): Promise<void> {
+      await GamesService.saveGame(this.game);
+      RouterService.goToGamesList();
     }
   }
 
