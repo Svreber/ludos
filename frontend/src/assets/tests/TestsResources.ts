@@ -45,4 +45,15 @@ export class TestsResources {
     playTimeMax: 1000,
     urlTT: ''
   };
+
+  static readonly ANDOR: IGame = {
+    bggId: 5,
+    id: 5,
+    name: 'Andor',
+    playersCountMin: 2,
+    playersCountMax: 4,
+    playTimeMin: 60,
+    playTimeMax: 90,
+    urlTT: ''
+  };
 }
