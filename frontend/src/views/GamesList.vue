@@ -1,7 +1,10 @@
 <template>
   <div class="games-list">
 
-    <a-form layout="inline">
+    <a-form class="games-form"
+            layout="inline">
+
+      <game-filters @change="params => initializeGames(params)"></game-filters>
 
       <a-form-item>
         <a-button @click="goToGameCreation()">
@@ -23,16 +26,12 @@
 
     </a-form>
 
-    <game-filters @change="initializeGames"></game-filters>
-
-    <div class="games-container">
-      <game-card :game="game"
-                 :key="game.id"
-                 :show-actions="isEdition"
-                 v-for="game in games"
-                 @change="initializeGames()">
-      </game-card>
-    </div>
+    <game-card :game="game"
+               :key="game.id"
+               :show-actions="isEdition"
+               v-for="game in games"
+               @change="initializeGames()">
+    </game-card>
 
   </div>
 </template>
@@ -77,9 +76,11 @@
 
 <style lang="scss" scoped>
   .games-list {
+    margin: 1rem;
 
-    .games-container {
-      margin: 20px;
+    .games-form,
+    .game-card {
+      margin: .5rem;
     }
   }
 </style>

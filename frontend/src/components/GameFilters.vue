@@ -9,7 +9,7 @@
                  @change="filtersChanged()"/>
       </a-form-item>
 
-      <a-form-item label="Players">
+      <a-form-item label="Players count">
         <a-input-number :min="1"
                         :max="20"
                         placeholder="Players"
@@ -17,13 +17,13 @@
                         @change="filtersChanged()"/>
       </a-form-item>
 
-      <a-form-item label="Duration">
+      <a-form-item label="Duration (minutes)">
         <a-input-number :min="1"
-                        :max="10000"
+                        :max="searchParams.playTimeMax || 10000"
                         v-model="searchParams.playTimeMin"
                         placeholder="Min"
                         @change="filtersChanged()"/>
-        <a-input-number :min="1"
+        <a-input-number :min="searchParams.playTimeMin || 1"
                         :max="10000"
                         placeholder="Max"
                         v-model="searchParams.playTimeMax"
