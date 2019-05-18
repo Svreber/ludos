@@ -14,7 +14,7 @@ export class BoardgameInput {
   // @IsNumber()
   @IsNotEmpty()
   @IsArray()
-  languagesId: number[];
+  languageIds: number[];
 
   @Field()
   @IsString()
