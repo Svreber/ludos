@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
-import { LanguageEntity } from "./language.entity";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { LanguageEntity } from '../language/language.entity';
 
 @Entity('boardgame')
 export class BoardgameEntity {

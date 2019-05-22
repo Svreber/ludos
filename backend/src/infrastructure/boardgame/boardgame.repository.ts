@@ -1,7 +1,7 @@
-import { LudosConnection } from '../database.provider';
-import { BoardgameEntity } from '../entities/boardgame.entity';
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
+import { LudosConnection } from '../database.provider';
+import { BoardgameEntity } from './boardgame.entity';
 
 @EntityRepository(BoardgameEntity)
 export class BoardgameRepository extends Repository<BoardgameEntity> {

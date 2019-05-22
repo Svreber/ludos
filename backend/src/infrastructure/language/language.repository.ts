@@ -1,7 +1,7 @@
-import { LudosConnection } from '../database.provider';
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
-import { LanguageEntity } from '../entities/language.entity';
+import { LudosConnection } from '../database.provider';
+import { LanguageEntity } from './language.entity';
 
 @EntityRepository(LanguageEntity)
 export class LanguageRepository extends Repository<LanguageEntity> {

@@ -1,5 +1,5 @@
-import { ObjectType, Field, ID } from 'type-graphql';
-import { LanguageOutput } from '../../language/model/language.output';
+import { Field, ID, ObjectType } from 'type-graphql';
+import { LanguageOutput } from '../../language/domain/language.output';
 
 @ObjectType()
 export class BoardgameOutput {

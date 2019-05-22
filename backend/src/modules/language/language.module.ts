@@ -1,10 +1,12 @@
-import { InfrastructureModule } from '../../infrastructure/infrastructure.module';
 import { Module } from '@nestjs/common';
-import { LanguageService } from './language.service';
+import { InfrastructureModule } from '../../infrastructure/infrastructure.module';
+import { LanguageConverter } from './domain/language.converter';
 import { LanguageResolver } from './language.resolver';
+import { LanguageService } from './language.service';
 
 @Module({
-  providers: [LanguageService, LanguageResolver],
-  imports: [InfrastructureModule]
+  providers: [LanguageConverter, LanguageService, LanguageResolver],
+  imports: [InfrastructureModule],
+  exports: [LanguageConverter]
 })
 export class LanguageModule { }

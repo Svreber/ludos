@@ -1,5 +1,5 @@
-import { InputType, Field } from 'type-graphql';
-import { IsString, IsNotEmpty, IsNumber, IsPositive, IsUrl, IsArray } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from 'class-validator';
+import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class BoardgameInput {
@@ -14,7 +14,7 @@ export class BoardgameInput {
   // @IsNumber()
   @IsNotEmpty()
   @IsArray()
-  languagesId: number[];
+  languageIds: number[];
 
   @Field()
   @IsString()

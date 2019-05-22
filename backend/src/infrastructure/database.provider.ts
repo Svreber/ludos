@@ -1,7 +1,7 @@
+import { Connection, createConnection } from 'typeorm';
 import { SnakeNamingStrategy } from '../core/utils/snake-naming-strategy';
-import { BoardgameEntity } from './entities/boardgame.entity';
-import { createConnection, Connection } from 'typeorm';
-import { LanguageEntity } from './entities/language.entity';
+import { BoardgameEntity } from './boardgame/boardgame.entity';
+import { LanguageEntity } from './language/language.entity';
 
 export class LudosConnection extends Connection {
 }
