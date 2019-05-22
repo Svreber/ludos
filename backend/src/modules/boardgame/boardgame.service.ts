@@ -1,46 +1,49 @@
-import { Boardgame } from './model/boardgame.output';
+import { BoardgameOutput } from './model/boardgame.output';
 import { BoardgameRepository } from '../../infrastructure/repositories/boardgame.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BoardgameInput } from './dto/boardgame.input';
-import { BoardgameConverter } from "../../infrastructure/converters/boardgame.converter";
 import { throwIfUndefined } from "../../core/utils/helpers";
+import { LanguageRepository } from '../../infrastructure/repositories/language.repository';
+import { BoardgameConverter } from '../../infrastructure/converters/boardgame.converter';
 
 @Injectable()
 export class BoardgameService {
-  constructor(private boardgameRepository: BoardgameRepository) {
+  constructor(private boardgameRepository: BoardgameRepository,
+              private boardgameConverter: BoardgameConverter) {
   }
 
-  async save(boardgameInput: BoardgameInput): Promise<Boardgame> {
-    let boardgameEntity = BoardgameConverter.inputToEntity(boardgameInput);
+  async save(boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
+    let boardgameEntity = await this.boardgameConverter.inputToEntity(boardgameInput);
     boardgameEntity = await this.boardgameRepository.save(boardgameEntity);
-    return BoardgameConverter.entityToOutput(boardgameEntity);
+    return this.boardgameConverter.entityToOutput(boardgameEntity);
   }
 
-  async get(id: number): Promise<Boardgame> {
-    let boardgameEntity = await this.boardgameRepository.findOne(id);
+  async get(id: number): Promise<BoardgameOutput> {
+    let boardgameEntity = await this.boardgameRepository.findOne(id, { relations: ['languages'] });
     throwIfUndefined(boardgameEntity, new NotFoundException());
-    return BoardgameConverter.entityToOutput(boardgameEntity);
+    return this.boardgameConverter.entityToOutput(boardgameEntity);
   }
 
-  async getAll(): Promise<Boardgame[]> {
-    let boardgameEntities = await this.boardgameRepository.find();
-    let boargames = boardgameEntities.map((boardgameEntity) => BoardgameConverter.entityToOutput(boardgameEntity));
+  async getAll(): Promise<BoardgameOutput[]> {
+    let boardgameEntities = await this.boardgameRepository.find({ relations: ['languages'] });
+    let boargames = boardgameEntities.map((boardgameEntity) => this.boardgameConverter.entityToOutput(boardgameEntity));
     return boargames;
   }
 
-  async delete(id: number): Promise<any> {
-    let boardgameEntity = await this.boardgameRepository.findOne(id);
+  async delete(id: number): Promise<BoardgameOutput> {
+    let boardgameEntity = await this.boardgameRepository.findOne(id, { relations: ['languages'] });
     throwIfUndefined(boardgameEntity, new NotFoundException());
-    let boardgameOuput = await BoardgameConverter.entityToOutput(boardgameEntity);
+    let boardgameOuput = await this.boardgameConverter.entityToOutput(boardgameEntity);
     await this.boardgameRepository.delete(boardgameEntity);
     return boardgameOuput;
   }
 
-  async update(id: number, boardgameInput: BoardgameInput): Promise<Boardgame> {
-    let boardgameEntityOld = await this.boardgameRepository.findOne(id);
+  async update(id: number, boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
+    let boardgameEntityOld = await this.boardgameRepository.findOne(id, { relations: ['languages'] });
     throwIfUndefined(boardgameEntityOld, new NotFoundException());
-    let boardgameEntityUpdated = Object.assign(boardgameEntityOld, BoardgameConverter.inputToEntity(boardgameInput));
+    let boardgameEntityNew = await this.boardgameConverter.inputToEntity(boardgameInput);
+    let boardgameEntityUpdated = Object.assign(boardgameEntityOld, boardgameEntityNew);
     boardgameEntityUpdated = await this.boardgameRepository.save(boardgameEntityUpdated);
-    return BoardgameConverter.entityToOutput(boardgameEntityUpdated);
+    return this.boardgameConverter.entityToOutput(boardgameEntityUpdated);
   }
 }

@@ -5,11 +5,13 @@ import { responseHeaders } from './core/middleware/response-header.middleware';
 import * as express from 'express'
 import { BoardgameModule } from './modules/boardgame/boardgame.module';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
+import { LanguageModule } from './modules/language/language.module';
 
 @Module({
   imports: [
     GraphqlModule,
     BoardgameModule,
+    LanguageModule,
     InfrastructureModule
   ]
 })

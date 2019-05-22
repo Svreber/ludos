@@ -1,14 +1,18 @@
 import { ObjectType, Field, ID } from 'type-graphql';
+import { LanguageOutput } from '../../language/model/language.output';
 
 @ObjectType()
-export class Boardgame {
+export class BoardgameOutput {
   private _type = 'output';
 
   @Field(type => ID)
   id?: number;
-  
+
   @Field()
   name?: string;
+  
+  @Field(() => LanguageOutput)
+  languages?: LanguageOutput[];
   
   @Field()
   buyDate?: string;
