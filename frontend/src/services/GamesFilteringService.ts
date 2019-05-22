@@ -7,7 +7,7 @@ export class GamesFilteringService {
   }
 
   static matchesName(game: IGame, name?: string): boolean {
-    return !GamesFilteringService.isString(name) || game.name.includes(name);
+    return !GamesFilteringService.isNotEmptyString(name) || game.name.includes(name);
   }
 
   static matchesPlayTimeMin(game: IGame, playTimeMin?: number): boolean {
@@ -22,7 +22,7 @@ export class GamesFilteringService {
     return !GamesFilteringService.isNumber(playersCount) || (playersCount >= game.playersCountMin && playersCount <= game.playersCountMax);
   }
 
-  private static isString(value?: string): value is string {
+  private static isNotEmptyString(value?: string): value is string {
     return !_.isEmpty(value);
   }
 
