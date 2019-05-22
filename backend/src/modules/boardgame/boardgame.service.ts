@@ -3,7 +3,6 @@ import { BoardgameRepository } from '../../infrastructure/repositories/boardgame
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BoardgameInput } from './dto/boardgame.input';
 import { throwIfUndefined } from "../../core/utils/helpers";
-import { LanguageRepository } from '../../infrastructure/repositories/language.repository';
 import { BoardgameConverter } from '../../infrastructure/converters/boardgame.converter';
 
 @Injectable()
@@ -16,6 +15,12 @@ export class BoardgameService {
     let boardgameEntity = await this.boardgameConverter.inputToEntity(boardgameInput);
     boardgameEntity = await this.boardgameRepository.save(boardgameEntity);
     return this.boardgameConverter.entityToOutput(boardgameEntity);
+  }
+
+  async saveBatch(boardgameInputs: BoardgameInput[]): Promise<BoardgameOutput[]> {
+    let boardgameEntities = await Promise.all(boardgameInputs.map(boardgameInput => this.boardgameConverter.inputToEntity(boardgameInput)));
+    boardgameEntities = await this.boardgameRepository.save(boardgameEntities);
+    return boardgameEntities.map(boardgameEntity => this.boardgameConverter.entityToOutput(boardgameEntity));
   }
 
   async get(id: number): Promise<BoardgameOutput> {
@@ -34,8 +39,15 @@ export class BoardgameService {
     let boardgameEntity = await this.boardgameRepository.findOne(id, { relations: ['languages'] });
     throwIfUndefined(boardgameEntity, new NotFoundException());
     let boardgameOuput = await this.boardgameConverter.entityToOutput(boardgameEntity);
-    await this.boardgameRepository.delete(boardgameEntity);
+    await this.boardgameRepository.remove(boardgameEntity);
     return boardgameOuput;
+  }
+
+  async deleteBatch(ids: number[]): Promise<BoardgameOutput[]> {
+    let boardgameEntities = await this.boardgameRepository.findByIds(ids, { relations: ['languages'] });
+    let boardgameOutputs = boardgameEntities.map(boardgameEntity => this.boardgameConverter.entityToOutput(boardgameEntity));
+    await this.boardgameRepository.remove(boardgameEntities)
+    return boardgameOutputs;
   }
 
   async update(id: number, boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
