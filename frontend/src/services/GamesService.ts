@@ -29,7 +29,7 @@ export class GamesService {
     `;
 
     return axios.post<IGraphqlResponse<IGamesResponse>>(GamesService.GRAPHQL_URL, {query})
-        .then(response => response.data.data.boardgames);
+      .then(response => response.data.data.boardgames);
   }
 
   static saveGame(game: INonPersistedGame): Promise<void> {
@@ -52,7 +52,14 @@ export class GamesService {
     `;
 
     return axios.post<void>(GamesService.GRAPHQL_URL, {query})
-        .then(response => response.data);
+      .then(response => response.data);
+  }
+
+  static saveAllGames(games: Array<INonPersistedGame>): Promise<void> {
+    return games.reduce(async (previousPromise, game) => {
+      await previousPromise;
+      return GamesService.saveGame(game);
+    }, Promise.resolve());
   }
 
   static deleteGame(game: IGame): Promise<void> {

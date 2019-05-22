@@ -42,7 +42,7 @@
     @Prop()
     game!: IGame;
     @Prop()
-    showActions: boolean = false;
+    showActions!: boolean;
 
     async deleteGame(): Promise<void> {
       await GamesService.deleteGame(this.game);
