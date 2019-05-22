@@ -16,6 +16,14 @@
                              :players-count-min="game.playersCountMin">
       </players-count-display>
 
+
+      <template class="ant-card-actions"
+                slot="actions"
+                v-if="showActions">
+        <a-icon type="delete" @click="deleteGame()"/>
+        <a-icon type="edit"/>
+      </template>
+
     </a-card>
   </div>
 </template>
@@ -23,6 +31,7 @@
 <script lang="ts">
   import {Component, Prop, Vue} from 'vue-property-decorator';
   import {IGame} from '@/interfaces/IGame';
+  import {GamesService} from '@/services/GamesService';
 
   @Component({
     name: GameCard.tag
@@ -32,6 +41,13 @@
 
     @Prop()
     game!: IGame;
+    @Prop()
+    showActions: boolean = false;
+
+    async deleteGame(): Promise<void> {
+      await GamesService.deleteGame(this.game);
+      this.$emit('change');
+    }
   }
 
   export default GameCard;

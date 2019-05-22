@@ -11,7 +11,7 @@ export class GamesService {
   private constructor() {
   }
 
-  static async queryGames(): Promise<Array<IGame>> {
+  static queryGames(): Promise<Array<IGame>> {
     const query = `
       query {
         boardgames {
@@ -32,7 +32,7 @@ export class GamesService {
         .then(response => response.data.data.boardgames);
   }
 
-  static async saveGame(game: INonPersistedGame): Promise<void> {
+  static saveGame(game: INonPersistedGame): Promise<void> {
     const query = `
       mutation {
         createBoardgame(boardgameInput: {
@@ -53,5 +53,19 @@ export class GamesService {
 
     return axios.post<void>(GamesService.GRAPHQL_URL, {query})
         .then(response => response.data);
+  }
+
+  static deleteGame(game: IGame): Promise<void> {
+    const query = `
+      mutation {
+        deleteBoardgame(id: ${game.id}) {
+          id,
+          name
+        }
+      }
+    `;
+
+    return axios.post<void>(GamesService.GRAPHQL_URL, {query})
+      .then(response => response.data);
   }
 }

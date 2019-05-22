@@ -1,12 +1,37 @@
 <template>
   <div class="games-list">
 
-    <a-button @click="goToGameCreation()">Add new game</a-button>
+    <a-form layout="inline">
+
+      <a-form-item>
+        <a-input v-model="searchParams.name"
+                 placeholder="Search for a game"
+                 @change="onChange"/>
+      </a-form-item>
+
+      <a-form-item>
+        <a-input-number :min="1"
+                        :max="20"
+                        v-model="searchParams.playersCount"
+                        @change="onChange"/>
+      </a-form-item>
+
+      <a-form-item>
+        <a-button @click="goToGameCreation()">Add new game</a-button>
+      </a-form-item>
+
+      <a-form-item>
+        <a-button @click="editGames()">Edit</a-button>
+      </a-form-item>
+
+    </a-form>
 
     <div class="games-container">
       <game-card :game="game"
                  :key="game.id"
-                 v-for="game in games">
+                 :show-actions="isEdition"
+                 v-for="game in games"
+                 @change="initializeGames()">
       </game-card>
     </div>
 
@@ -26,6 +51,8 @@
     static tag = 'GamesList';
 
     games: Array<IGame> = [];
+    isEdition: boolean = false;
+    searchParams: any = {};
 
     created(): void {
       this.initializeGames();
@@ -37,6 +64,10 @@
 
     goToGameCreation(): void {
       RouterService.goToGameCreation();
+    }
+
+    editGames(): void {
+      this.isEdition = !this.isEdition;
     }
   }
 
