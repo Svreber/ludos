@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { LanguageEntity } from '../language/language.entity';
 
 @Entity('boardgame')
 export class BoardgameEntity {
@@ -9,6 +10,10 @@ export class BoardgameEntity {
 
   @Column()
   name: string;
+
+  @ManyToMany(type => LanguageEntity)
+  @JoinTable({name: "join_boardgame_language"})
+  languages: LanguageEntity[];
 
   @Column()
   buyDate: string;

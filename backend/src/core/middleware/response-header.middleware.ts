@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export const responseHeaders = (req: Request, res: Response, next: NextFunction) => {
   // Website you wish to allow to connect

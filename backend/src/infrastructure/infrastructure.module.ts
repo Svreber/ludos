@@ -1,13 +1,13 @@
-import { BoardgameRepositoryProvider } from './repositories/boardgame.repository';
-import { LudosConnectionProvider } from './database.provider';
 import { Module } from '@nestjs/common';
+import { BoardgameRepositoryProvider } from './boardgame/boardgame.repository';
+import { LudosConnectionProvider } from './database.provider';
+import { LanguageRepositoryProvider } from './language/language.repository';
 
-
-// Setup of the database
+const Repositories = [BoardgameRepositoryProvider, LanguageRepositoryProvider];
 
 @Module({
-  providers: [LudosConnectionProvider, BoardgameRepositoryProvider],
-  exports: [LudosConnectionProvider, BoardgameRepositoryProvider]
+  providers: [LudosConnectionProvider, ...Repositories],
+  exports: [LudosConnectionProvider, ...Repositories]
 })
 export class InfrastructureModule {
 }
