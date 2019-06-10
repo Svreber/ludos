@@ -1,20 +1,10 @@
 <template>
   <div class="games-list">
 
-    <a-form layout="inline">
+    <a-form class="games-form"
+            layout="inline">
 
-      <a-form-item>
-        <a-input v-model="searchParams.name"
-                 placeholder="Search for a game"
-                 @change="initializeGames()"/>
-      </a-form-item>
-
-      <a-form-item>
-        <a-input-number :min="1"
-                        :max="20"
-                        v-model="searchParams.playersCount"
-                        @change="initializeGames()"/>
-      </a-form-item>
+      <game-filters @change="params => initializeGames(params)"></game-filters>
 
       <a-form-item>
         <a-button @click="goToGameCreation()">
@@ -36,14 +26,12 @@
 
     </a-form>
 
-    <div class="games-container">
-      <game-card :game="game"
-                 :key="game.id"
-                 :show-actions="isEdition"
-                 v-for="game in games"
-                 @change="initializeGames()">
-      </game-card>
-    </div>
+    <game-card :game="game"
+               :key="game.id"
+               :show-actions="isEdition"
+               v-for="game in games"
+               @change="initializeGames()">
+    </game-card>
 
   </div>
 </template>
@@ -53,6 +41,8 @@
   import {GamesService} from '@/services/GamesService';
   import {IGame} from '@/interfaces/IGame';
   import {RouterService} from '@/services/RouterService';
+  import {GamesSearchService} from '@/services/GamesSearchService';
+  import {IGamesSearchParameters} from '@/interfaces/IGamesSearchParameters';
 
   @Component({
     name: GamesList.tag
@@ -62,14 +52,14 @@
 
     games: Array<IGame> = [];
     isEdition: boolean = false;
-    searchParams: any = {};
 
     created(): void {
       this.initializeGames();
     }
 
-    private async initializeGames(): Promise<void> {
-      this.games = await GamesService.queryGames();
+    private async initializeGames(searchParams?: IGamesSearchParameters): Promise<void> {
+      const allGames = await GamesService.queryGames();
+      this.games = GamesSearchService.getGames(allGames, searchParams);
     }
 
     goToGameCreation(): void {
@@ -86,9 +76,11 @@
 
 <style lang="scss" scoped>
   .games-list {
+    margin: 1rem;
 
-    .games-container {
-      margin: 20px;
+    .games-form,
+    .game-card {
+      margin: .5rem;
     }
   }
 </style>

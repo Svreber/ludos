@@ -16,7 +16,6 @@
                              :players-count-min="game.playersCountMin">
       </players-count-display>
 
-
       <template class="ant-card-actions"
                 slot="actions"
                 v-if="showActions">
@@ -56,7 +55,6 @@
 <style lang="scss" scoped>
   .game-card {
     display: inline-block;
-    margin: .5rem;
     text-align: center;
 
     .name {

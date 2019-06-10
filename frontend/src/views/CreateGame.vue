@@ -55,9 +55,9 @@
                    :label-col="{ span: 5 }"
                    :wrapper-col="{ span: 12 }">
 
-        <a-input placeholder="ID Boardgamegeek"
-                 v-model="game.bggId">
-        </a-input>
+        <a-input-number placeholder="ID Boardgamegeek"
+                        v-model="game.bggId">
+        </a-input-number>
 
       </a-form-item>
 
