@@ -66,7 +66,7 @@ export class BoardgameService {
   }
 
   async getLanguages(id: number): Promise<LanguageOutput[]> {
-    let languageEntities = await this.languageRepository.find({ where: { boardgameId: id } });
-    return _.map(languageEntities, languageEntity => this.languageConverter.entityToOutput(languageEntity));
+    const boardgame = await this.boardgameRepository.findOne({relations: ['languages'], where: {id}});
+    return _.map(boardgame.languages, languageEntity => this.languageConverter.entityToOutput(languageEntity));
   }
 }

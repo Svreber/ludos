@@ -23,7 +23,7 @@ export const expressLoggerToConsole = expressWinston.logger({
   msg: (req: Request, res: Response) => {
     let message = `${req.method} ${req.url} ${res.statusCode} ${(res as any).responseTime}ms`;
 
-    if (isGraphQLPostRequest(req)) {
+    if (isGraphQLPostRequest(req) && req.body.operationName !== 'IntrospectionQuery') {
       message = message + "\n" + prettyPrintGraphlQLPostRequest(req.body);
     }
 

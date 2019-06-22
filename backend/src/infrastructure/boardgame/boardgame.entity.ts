@@ -15,24 +15,24 @@ export class BoardgameEntity {
   @JoinTable({name: "join_boardgame_language"})
   languages: LanguageEntity[];
 
-  @Column()
+  @Column({nullable: true})
   buyDate: string;
 
-  @Column()
+  @Column({nullable: true})
   playersCountMin: number;
 
-  @Column()
+  @Column({nullable: true})
   playersCountMax: number;
 
-  @Column()
+  @Column({nullable: true})
   playTimeMin: number;
 
-  @Column()
+  @Column({nullable: true})
   playTimeMax: number;
 
-  @Column()
+  @Column({nullable: true})
   boardgameGeekId: number
 
-  @Column()
+  @Column({nullable: true})
   urlTricTrac: string
 }
