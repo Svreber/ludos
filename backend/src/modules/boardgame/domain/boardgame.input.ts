@@ -1,5 +1,6 @@
 import { IsArray, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
+import { FieldOptional } from '../../../core/decorators/field-optional.decorator';
 
 @InputType()
 export class BoardgameInput {
@@ -10,43 +11,40 @@ export class BoardgameInput {
   @IsNotEmpty()
   name: string;
 
-  @Field(() => Number)
-  // @IsNumber()
+  @FieldOptional(() => Number)
   @IsNotEmpty()
   @IsArray()
-  languageIds: number[];
+  languageIds: number[] = [];
 
-  @Field()
+  @FieldOptional()
   @IsString()
-  @IsNotEmpty()
   buyDate: string;
 
-  @Field()
+  @FieldOptional()
   @IsNumber()
   @IsPositive()
   playersCountMin: number;
 
-  @Field()
+  @FieldOptional()
   @IsNumber()
   @IsPositive()
   playersCountMax: number;
 
-  @Field()
+  @FieldOptional()
   @IsNumber()
   @IsPositive()
   playTimeMin: number;
 
-  @Field()
+  @FieldOptional()
   @IsNumber()
   @IsPositive()
   playTimeMax: number;
 
-  @Field()
+  @FieldOptional()
   @IsNumber()
   bggId: number; 
 
-  @Field()
+  @FieldOptional()
   @IsUrl()
-  @IsNotEmpty()
   urlTT: string;
 }

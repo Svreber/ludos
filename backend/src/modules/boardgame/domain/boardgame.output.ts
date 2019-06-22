@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { LanguageOutput } from '../../language/domain/language.output';
+import { FieldOptional } from '../../../core/decorators/field-optional.decorator';
 
 @ObjectType()
 export class BoardgameOutput {
@@ -11,27 +12,27 @@ export class BoardgameOutput {
   @Field()
   name?: string;
   
-  @Field(() => [LanguageOutput])
+  @FieldOptional(() => [LanguageOutput])
   languages?: LanguageOutput[];
   
-  @Field()
+  @FieldOptional()
   buyDate?: string;
 
-  @Field()
+  @FieldOptional()
   playersCountMax?: number;
 
-  @Field()
+  @FieldOptional()
   playersCountMin?: number;
 
-  @Field()
+  @FieldOptional()
   playTimeMax?: number;
 
-  @Field()
+  @FieldOptional()
   playTimeMin?: number;
 
-  @Field()
+  @FieldOptional()
   bggId?: number; 
 
-  @Field()
+  @FieldOptional()
   urlTT?: string;
 }
