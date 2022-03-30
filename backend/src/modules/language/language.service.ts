@@ -4,13 +4,11 @@ import { LanguageEntity } from '../../infrastructure/language/language.entity';
 import { LanguageRepository } from '../../infrastructure/language/language.repository';
 import { LanguageConverter } from './domain/language.converter';
 import { LanguageOutput } from './domain/language.output';
-import { InjectRepository } from "@mikro-orm/nestjs";
-import { RequestContext } from "@mikro-orm/core";
 
 @Injectable()
 export class LanguageService {
   
-  constructor(@InjectRepository(LanguageEntity) private languageRepository: LanguageRepository,
+  constructor(private languageRepository: LanguageRepository,
               private languageConverter: LanguageConverter) {
   }
 

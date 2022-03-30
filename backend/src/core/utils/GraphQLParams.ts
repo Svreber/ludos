@@ -1,6 +1,7 @@
-// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/express-graphql/index.d.ts#L105
+// https://github.com/graphql/express-graphql/blob/main/src/index.ts
 export interface GraphQLParams {
-    query: string | null | undefined;
-    variables: { [name: string]: any } | null | undefined;
-    operationName: string | null | undefined;
+    query: string | null;
+    variables: { readonly [name: string]: unknown } | null;
+    operationName: string | null;
+    raw: boolean;
 }

@@ -9,15 +9,12 @@ import { BoardgameInput } from './domain/boardgame.input';
 import { BoardgameOutput } from './domain/boardgame.output';
 import * as _ from 'lodash';
 import { wrap } from "@mikro-orm/core";
-import { InjectRepository } from "@mikro-orm/nestjs";
-import { LanguageEntity } from "../../infrastructure/language/language.entity";
-import { BoardgameEntity } from "../../infrastructure/boardgame/boardgame.entity";
 
 @Injectable()
 export class BoardgameService {
-  constructor(@InjectRepository(BoardgameEntity) private boardgameRepository: BoardgameRepository,
+  constructor(private boardgameRepository: BoardgameRepository,
               private boardgameConverter: BoardgameConverter,
-              @InjectRepository(LanguageEntity) private languageRepository: LanguageRepository,
+              private languageRepository: LanguageRepository,
               private languageConverter: LanguageConverter) {
   }
 
