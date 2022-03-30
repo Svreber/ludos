@@ -7,42 +7,39 @@
               :show-upload-list="false"
               @change="parseFile">
       <a-button :loading="isUploading">
-        <a-icon type="upload" /> Upload games
+        <font-awesome-icon icon="upload" />
+        <span>Upload games</span>
       </a-button>
     </a-upload>
 
   </div>
 </template>
 
-<script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import {BatchService} from '@/services/BatchService';
+<script setup lang="ts">
+import { ref } from "vue";
+import { BatchService } from "../services/BatchService";
 
-  @Component({
-    name: GamesImport.tag
-  })
-  export class GamesImport extends Vue {
-    static tag = 'GamesImport';
+const emit = defineEmits<{
+  (e: 'change'): void
+}>();
 
-    isUploading: boolean = false;
+const isUploading = ref<boolean>(false);
 
-    dummyRequest(): void {
-      // Required to avoid the upload component to throw some http request
-      // https://medium.com/@mattcroak718/managing-file-uploads-with-ant-design-6d78e592f2c4
-    }
+const dummyRequest = (): void => {
+  // Required to avoid the upload component to throw some http request
+  // https://medium.com/@mattcroak718/managing-file-uploads-with-ant-design-6d78e592f2c4
+}
 
-    async parseFile(arg: {file: {originFileObj: File}}): Promise<void> {
-      this.isUploading = true;
-      await BatchService.parseCsv(arg.file.originFileObj);
-      this.isUploading = false;
-      this.$emit('change');
-    }
-  }
-
-  export default GamesImport;
+const parseFile = async (arg: {file: {originFileObj: File}}): Promise<void> => {
+  isUploading.value = true;
+  await BatchService.parseCsv(arg.file.originFileObj);
+  isUploading.value = false;
+  emit('change');
+}
 </script>
 
-<style lang="scss" scoped>
+
+<style lang="less" scoped>
   .games-import {
   }
 </style>

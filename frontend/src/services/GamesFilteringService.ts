@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {IGame} from '@/interfaces/IGame';
+import { IGame } from "../interfaces/IGame";
 
 export class GamesFilteringService {
 

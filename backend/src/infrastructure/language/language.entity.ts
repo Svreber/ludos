@@ -1,18 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { LanguageRepository } from "./language.repository";
 
-@Entity('language')
+@Entity({
+  customRepository: () => LanguageRepository,
+  tableName: 'language'
+})
 export class LanguageEntity {
   private _type = 'entity';
 
-  @PrimaryGeneratedColumn()
+  @PrimaryKey()
   id: number;
 
-  @Column()
+  @Property()
   name: string;
 
-  @Column()
+  @Property()
   nameEnglish: string;
 
-  @Column()
+  @Property()
   nameAlpha3: string;
 }

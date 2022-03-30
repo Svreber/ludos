@@ -1,14 +1,8 @@
-import { Repository } from 'typeorm';
-import { EntityRepository } from 'typeorm/decorator/EntityRepository';
-import { LudosConnection } from '../database.provider';
+import { EntityRepository } from '@mikro-orm/sqlite';
 import { BoardgameEntity } from './boardgame.entity';
 
-@EntityRepository(BoardgameEntity)
-export class BoardgameRepository extends Repository<BoardgameEntity> {
+export class BoardgameRepository extends EntityRepository<BoardgameEntity> {
+  fork(): BoardgameRepository {
+    return new BoardgameRepository(this.em.fork(), BoardgameEntity);
+  }
 }
-
-export const BoardgameRepositoryProvider = {
-  provide: BoardgameRepository.name,
-  useFactory: (connection: LudosConnection) => connection.getCustomRepository(BoardgameRepository),
-  inject: [LudosConnection]
-};

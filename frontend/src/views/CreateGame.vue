@@ -10,7 +10,7 @@
                    :wrapper-col="{ span: 12 }">
 
         <a-input placeholder="Name"
-                 v-model="game.name">
+                 v-model:value="game.name">
         </a-input>
 
       </a-form-item>
@@ -21,14 +21,14 @@
 
         <a-input-number :min="1"
                         placeholder="Min"
-                        v-model="game.playersCountMin">
+                        v-model:value="game.playersCountMin">
         </a-input-number>
 
         <span> - </span>
 
         <a-input-number :min="game.playersCountMin"
                         placeholder="Max"
-                        v-model="game.playersCountMax">
+                        v-model:value="game.playersCountMax">
         </a-input-number>
 
       </a-form-item>
@@ -39,14 +39,14 @@
 
         <a-input-number :min="0"
                         placeholder="Min"
-                        v-model="game.playTimeMin">
+                        v-model:value="game.playTimeMin">
         </a-input-number>
 
         <span> - </span>
 
         <a-input-number :min="game.playTimeMin"
                         placeholder="Max"
-                        v-model="game.playTimeMax">
+                        v-model:value="game.playTimeMax">
         </a-input-number>
 
       </a-form-item>
@@ -56,7 +56,7 @@
                    :wrapper-col="{ span: 12 }">
 
         <a-input-number placeholder="ID Boardgamegeek"
-                        v-model="game.bggId">
+                        v-model:value="game.bggId">
         </a-input-number>
 
       </a-form-item>
@@ -66,7 +66,7 @@
                    :wrapper-col="{ span: 12 }">
 
         <a-input placeholder="URL TricTrac"
-                 v-model="game.urlTT">
+                 v-model:value="game.urlTT">
         </a-input>
 
       </a-form-item>
@@ -84,30 +84,22 @@
   </div>
 </template>
 
-<script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import {GamesService} from '@/services/GamesService';
-  import {INonPersistedGame} from '@/interfaces/IGame';
-  import {RouterService} from '@/services/RouterService';
+<script setup lang="ts">
+import { reactive } from "vue";
+import { INonPersistedGame } from "../interfaces/IGame";
+import { GamesService } from "../services/GamesService";
+import { RouterService } from "../services/RouterService";
 
-  @Component({
-    name: CreateGame.tag
-  })
-  export class CreateGame extends Vue {
-    static tag = 'CreateGame';
+const game = reactive<INonPersistedGame>({})
 
-    game: INonPersistedGame = {};
+const saveGame = async (): Promise<void> => {
+  await GamesService.saveGame(game);
+  RouterService.goToGamesList();
+}
 
-    async saveGame(): Promise<void> {
-      await GamesService.saveGame(this.game);
-      RouterService.goToGamesList();
-    }
-  }
-
-  export default CreateGame;
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .create-game {
   }
 </style>

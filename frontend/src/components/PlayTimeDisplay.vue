@@ -1,40 +1,33 @@
 <template>
   <div class="play-time-display">
 
-    <font-awesome-icon class="icon" icon="clock"/>
+    <font-awesome-icon icon="clock"/>
 
     {{playTimeString}}
 
   </div>
 </template>
 
-<script lang="ts">
-  import {Component, Prop, Vue} from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, PropType } from "vue";
 
-  @Component({
-    name: PlayTimeDisplay.tag
-  })
-  export class PlayTimeDisplay extends Vue {
-    static tag = 'PlayTimeDisplay';
-
-    @Prop()
-    playTimeMax!: number;
-    @Prop()
-    playTimeMin!: number;
-
-    get playTimeString(): string {
-      return this.playTimeMin === this.playTimeMax ? `${this.playTimeMin}` : `${this.playTimeMin} - ${this.playTimeMax}`;
-    }
+const props = defineProps({
+  playTimeMax: {
+    required: true,
+    type: Number as PropType<number>
+  },
+  playTimeMin: {
+    required: true,
+    type: Number as PropType<number>
   }
+});
 
-  export default PlayTimeDisplay;
+const playTimeString = computed<string>(() => {
+  return props.playTimeMin === props.playTimeMax ? `${props.playTimeMin}` : `${props.playTimeMin} - ${props.playTimeMax}`;
+})
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .play-time-display {
-
-    .icon {
-      margin-right: 0.2rem;
-    }
   }
 </style>

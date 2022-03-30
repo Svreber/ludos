@@ -1,5 +1,5 @@
 import { IsArray, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from 'class-validator';
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
 export class BoardgameInput {
@@ -10,7 +10,7 @@ export class BoardgameInput {
   @IsNotEmpty()
   name: string;
 
-  @Field(() => Number)
+  @Field(() => [Number])
   // @IsNumber()
   @IsNotEmpty()
   @IsArray()

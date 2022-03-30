@@ -4,17 +4,23 @@ import { Converter } from '../../../infrastructure/converter';
 import { LanguageRepository } from '../../../infrastructure/language/language.repository';
 import { BoardgameInput } from './boardgame.input';
 import { BoardgameOutput } from './boardgame.output';
+import { LanguageEntity } from "../../../infrastructure/language/language.entity";
+import { InjectRepository } from "@mikro-orm/nestjs";
+import { Collection } from "@mikro-orm/core";
 
 @Injectable()
 export class BoardgameConverter implements Converter<BoardgameInput, BoardgameOutput, BoardgameEntity> {
   
-  constructor(private languageRepository: LanguageRepository) {
+  constructor(@InjectRepository(LanguageEntity) private languageRepository: LanguageRepository) {
   }
 
   async inputToEntity(input: BoardgameInput): Promise<BoardgameEntity> {
     let entity = new BoardgameEntity();
     entity.name = input.name;
-    entity.languages = await this.languageRepository.findByIds(input.languageIds)
+    const languages = await this.languageRepository.find({
+      id: { $in: input.languageIds }
+    });
+    entity.languages.add(...languages)
     entity.buyDate = input.buyDate;
     entity.playTimeMin = input.playTimeMin;
     entity.playTimeMax = input.playTimeMax;

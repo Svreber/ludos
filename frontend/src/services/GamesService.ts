@@ -1,7 +1,7 @@
-import axios from 'axios';
-import {IGame, INonPersistedGame} from '@/interfaces/IGame';
-import {IGraphqlResponse} from '@/interfaces/IGraphqlResponse';
-import {IGamesResponse} from '@/interfaces/IGamesResponse';
+import { IGame, INonPersistedGame } from "../interfaces/IGame";
+import { IGamesResponse } from "../interfaces/IGamesResponse";
+import { IGraphqlResponse } from "../interfaces/IGraphqlResponse";
+import axios from "axios";
 
 export class GamesService {
 
@@ -40,6 +40,7 @@ export class GamesService {
           buyDate: "${game.buyDate}",
           playersCountMin: ${game.playersCountMin},
           playersCountMax: ${game.playersCountMax},
+          languageIds: []
           playTimeMin: ${game.playTimeMin},
           playTimeMax: ${game.playTimeMax},
           bggId: ${game.bggId},

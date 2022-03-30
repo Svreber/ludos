@@ -1,4 +1,4 @@
-import { Args, Mutation, Parent, Query, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { LanguageOutput } from '../language/domain/language.output';
 import { BoardgameService } from './boardgame.service';
 import { BoardgameInput } from './domain/boardgame.input';
@@ -54,10 +54,10 @@ export class BoardgameResolver {
   }
 
   /**
-   * Property resolvers
+   * Field resolvers
    */
 
-  @ResolveProperty()
+  @ResolveField()
   async languages(@Parent() boardgameOutput: BoardgameOutput): Promise<LanguageOutput[]> {
      return this.boardgameService.getLanguages(boardgameOutput.id);
   }

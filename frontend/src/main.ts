@@ -1,15 +1,14 @@
-import Vue from 'vue';
-import App from './App.vue';
-import {router} from './router';
-import '@/config/ant';
-import '@/config/fontawesome';
-import '@/components/components';
+import { createApp } from 'vue'
+import { router } from "./router";
+import App from './App.vue'
+import Antd from 'ant-design-vue';
+import { components } from "./components/components";
+import { FontAwesomePlugin } from "./config/fontawesome";
+import 'ant-design-vue/dist/antd.css';
 
-import '@/assets/css/main.scss';
-
-Vue.config.productionTip = false;
-
-new Vue({
-  router,
-  render: (h) => h(App),
-}).$mount('#app');
+createApp(App)
+    .use(router)
+    .use(Antd)
+    .use(components)
+    .use(FontAwesomePlugin)
+    .mount('#app')

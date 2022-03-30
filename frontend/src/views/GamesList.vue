@@ -8,8 +8,10 @@
 
       <a-form-item>
         <a-button @click="goToGameCreation()">
-          <a-icon type="plus"></a-icon>
-          Add new game
+          <font-awesome-icon icon="plus"/>
+          <span>
+            Add new game
+          </span>
         </a-button>
       </a-form-item>
 
@@ -19,62 +21,54 @@
 
       <a-form-item>
         <a-button @click="editGames()">
-          <a-icon type="edit"></a-icon>
-          Edit
+          <font-awesome-icon icon="edit"/>
+          <span>
+            Edit
+          </span>
         </a-button>
       </a-form-item>
 
     </a-form>
 
-    <game-card :game="game"
+    <game-card v-for="game in games"
+               :game="game"
                :key="game.id"
                :show-actions="isEdition"
-               v-for="game in games"
                @change="initializeGames()">
     </game-card>
 
   </div>
 </template>
 
-<script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import {GamesService} from '@/services/GamesService';
-  import {IGame} from '@/interfaces/IGame';
-  import {RouterService} from '@/services/RouterService';
-  import {GamesSearchService} from '@/services/GamesSearchService';
-  import {IGamesSearchParameters} from '@/interfaces/IGamesSearchParameters';
+<script setup lang="ts">
+import { ref } from "vue";
+import { IGame } from "../interfaces/IGame";
+import { IGamesSearchParameters } from "../interfaces/IGamesSearchParameters";
+import { GamesService } from "../services/GamesService";
+import { GamesSearchService } from "../services/GamesSearchService";
+import { RouterService } from "../services/RouterService";
 
-  @Component({
-    name: GamesList.tag
-  })
-  export class GamesList extends Vue {
-    static tag = 'GamesList';
+const games = ref<Array<IGame>>([]);
+const isEdition = ref<boolean>(false);
 
-    games: Array<IGame> = [];
-    isEdition: boolean = false;
+const initializeGames = async (searchParams?: IGamesSearchParameters): void => {
+  const allGames = await GamesService.queryGames();
+  games.value = GamesSearchService.getGames(allGames, searchParams);
+}
 
-    created(): void {
-      this.initializeGames();
-    }
+const goToGameCreation = (): void => {
+  RouterService.goToGameCreation();
+}
 
-    private async initializeGames(searchParams?: IGamesSearchParameters): Promise<void> {
-      const allGames = await GamesService.queryGames();
-      this.games = GamesSearchService.getGames(allGames, searchParams);
-    }
+const editGames = (): void => {
+  isEdition.value = !isEdition.value;
+}
 
-    goToGameCreation(): void {
-      RouterService.goToGameCreation();
-    }
+initializeGames();
 
-    editGames(): void {
-      this.isEdition = !this.isEdition;
-    }
-  }
-
-  export default GamesList;
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .games-list {
     margin: 1rem;
 

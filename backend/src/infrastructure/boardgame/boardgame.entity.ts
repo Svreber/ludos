@@ -1,38 +1,41 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Collection, Entity, ManyToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { LanguageEntity } from '../language/language.entity';
+import { BoardgameRepository } from "./boardgame.repository";
 
-@Entity('boardgame')
+@Entity({
+  customRepository: () => BoardgameRepository,
+  tableName: 'boardgame'
+})
 export class BoardgameEntity {
   private _type = 'entity';
 
-  @PrimaryGeneratedColumn()
+  @PrimaryKey()
   id: number;
 
-  @Column()
+  @Property()
   name: string;
 
-  @ManyToMany(type => LanguageEntity)
-  @JoinTable({name: "join_boardgame_language"})
-  languages: LanguageEntity[];
+  @ManyToMany(() => LanguageEntity)
+  languages = new Collection<LanguageEntity>(this);
 
-  @Column()
+  @Property()
   buyDate: string;
 
-  @Column()
+  @Property()
   playersCountMin: number;
 
-  @Column()
+  @Property()
   playersCountMax: number;
 
-  @Column()
+  @Property()
   playTimeMin: number;
 
-  @Column()
+  @Property()
   playTimeMax: number;
 
-  @Column()
+  @Property()
   boardgameGeekId: number
 
-  @Column()
+  @Property()
   urlTricTrac: string
 }

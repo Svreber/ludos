@@ -1,20 +1,21 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import GamesList from '@/views/GamesList.vue';
-import CreateGame from '@/views/CreateGame.vue';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import GamesList from './views/GamesList.vue';
+import CreateGame from './views/CreateGame.vue';
 
-Vue.use(Router);
-
-export const router = new Router({
-  routes: [
+const routes: Array<RouteRecordRaw> = [
     {
-      path: '/',
-      name: 'games',
-      component: GamesList
+        path: '/',
+        name: 'games',
+        component: GamesList
     }, {
-      path: '/create',
-      name: 'createGame',
-      component: CreateGame
+        path: '/create',
+        name: 'createGame',
+        component: CreateGame
     }
-  ],
-});
+]
+
+export const router = createRouter({
+    // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
+    history: createWebHashHistory(),
+    routes, // short for `routes: routes`
+})

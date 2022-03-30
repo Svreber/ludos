@@ -1,13 +1,18 @@
 import { Module } from '@nestjs/common';
-import { BoardgameRepositoryProvider } from './boardgame/boardgame.repository';
-import { LudosConnectionProvider } from './database.provider';
-import { LanguageRepositoryProvider } from './language/language.repository';
-
-const Repositories = [BoardgameRepositoryProvider, LanguageRepositoryProvider];
+import { MikroOrmModule } from "@mikro-orm/nestjs";
+import { BoardgameEntity } from "./boardgame/boardgame.entity";
+import { LanguageEntity } from "./language/language.entity";
 
 @Module({
-  providers: [LudosConnectionProvider, ...Repositories],
-  exports: [LudosConnectionProvider, ...Repositories]
+  imports: [
+    MikroOrmModule.forRoot({
+      name: "LudosDB",
+      dbName: "ludos.sqlite3",
+      type: "sqlite",
+      entities: [BoardgameEntity, LanguageEntity],
+      debug: true
+    })
+  ]
 })
 export class InfrastructureModule {
 }

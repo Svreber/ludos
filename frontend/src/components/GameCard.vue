@@ -19,40 +19,42 @@
       <template class="ant-card-actions"
                 slot="actions"
                 v-if="showActions">
-        <a-icon type="delete" @click="deleteGame()"/>
-        <a-icon type="edit"/>
+        <font-awesome-icon icon="remove" @click="deleteGame()"/>
+        <font-awesome-icon icon="edit"/>
       </template>
 
     </a-card>
   </div>
 </template>
 
-<script lang="ts">
-  import {Component, Prop, Vue} from 'vue-property-decorator';
-  import {IGame} from '@/interfaces/IGame';
-  import {GamesService} from '@/services/GamesService';
+<script setup lang="ts">
+import { PropType } from "vue";
+import { IGame } from "../interfaces/IGame";
+import { GamesService } from "../services/GamesService";
 
-  @Component({
-    name: GameCard.tag
-  })
-  export class GameCard extends Vue {
-    static tag = 'GameCard';
-
-    @Prop()
-    game!: IGame;
-    @Prop()
-    showActions!: boolean;
-
-    async deleteGame(): Promise<void> {
-      await GamesService.deleteGame(this.game);
-      this.$emit('change');
-    }
+const props = defineProps({
+  game: {
+    required: true,
+    type: Object as PropType<IGame>
+  },
+  showActions: {
+    required: true,
+    type: Boolean as PropType<boolean>
   }
+});
 
-  export default GameCard;
+const emit = defineEmits<{
+  (e: 'change'): void
+}>();
+
+const deleteGame = async (): Promise<void> => {
+  await GamesService.deleteGame(props.game);
+  emit('change')
+}
+
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .game-card {
     display: inline-block;
     text-align: center;
