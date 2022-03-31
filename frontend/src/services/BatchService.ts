@@ -1,8 +1,9 @@
-import {Papa} from '@/config/vendors';
-import {IGamesImportResult} from '@/interfaces/IGamesImportResult';
-import {ParseError} from 'papaparse';
-import {INonPersistedGame} from '@/interfaces/IGame';
-import {GamesService} from '@/services/GamesService';
+import { INonPersistedGame } from "../interfaces/IGame";
+import { IGamesImportResult } from "../interfaces/IGamesImportResult";
+import { ParseError } from "papaparse";
+import { GamesService } from "./GamesService";
+import { Papa } from "../config/vendors";
+
 
 export class BatchService {
 
@@ -11,6 +12,8 @@ export class BatchService {
 
   static parseGamesFile(file: File): Promise<Array<INonPersistedGame>> {
     return new Promise((resolve, reject) => {
+      // TODO: FIXME
+      // @ts-ignore
       Papa.parse(file, {
         complete: (results: IGamesImportResult) => resolve(results.data),
         error: (error: ParseError) => reject(error),
@@ -26,7 +29,8 @@ export class BatchService {
       const uploadedGames = await BatchService.parseGamesFile(file);
       return GamesService.saveAllGames(uploadedGames);
     } catch (error) {
-      throw new Error(error);
+      // TODO: FIXME
+      throw new Error(error as any);
     }
   }
 }

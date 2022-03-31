@@ -8,6 +8,7 @@ import { BoardgameConverter } from './domain/boardgame.converter';
 import { BoardgameInput } from './domain/boardgame.input';
 import { BoardgameOutput } from './domain/boardgame.output';
 import * as _ from 'lodash';
+import { wrap } from "@mikro-orm/core";
 
 @Injectable()
 export class BoardgameService {
@@ -18,55 +19,55 @@ export class BoardgameService {
   }
 
   async save(boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
-    let boardgameEntity = await this.boardgameConverter.inputToEntity(boardgameInput);
-    boardgameEntity = await this.boardgameRepository.save(boardgameEntity);
+    const boardgameEntity = await this.boardgameConverter.inputToEntity(boardgameInput);
+    await this.boardgameRepository.persistAndFlush(boardgameEntity);
     return this.boardgameConverter.entityToOutput(boardgameEntity);
   }
 
   async saveBatch(boardgameInputs: BoardgameInput[]): Promise<BoardgameOutput[]> {
-    let boardgameEntities = await Promise.all(boardgameInputs.map(boardgameInput => this.boardgameConverter.inputToEntity(boardgameInput)));
-    boardgameEntities = await this.boardgameRepository.save(boardgameEntities);
+    const boardgameEntities = await Promise.all(boardgameInputs.map(boardgameInput => this.boardgameConverter.inputToEntity(boardgameInput)));
+    await this.boardgameRepository.persistAndFlush(boardgameEntities);
     return boardgameEntities.map(boardgameEntity => this.boardgameConverter.entityToOutput(boardgameEntity));
   }
 
   async get(id: number): Promise<BoardgameOutput> {
-    let boardgameEntity = await this.boardgameRepository.findOne(id);
+    const boardgameEntity = await this.boardgameRepository.findOne(id);
     throwIfUndefined(boardgameEntity, new NotFoundException());
     return this.boardgameConverter.entityToOutput(boardgameEntity);
   }
 
   async getAll(): Promise<BoardgameOutput[]> {
-    let boardgameEntities = await this.boardgameRepository.find();
-    let boargames = boardgameEntities.map((boardgameEntity) => this.boardgameConverter.entityToOutput(boardgameEntity));
+    const boardgameEntities = await this.boardgameRepository.findAll();
+    const boargames = boardgameEntities.map((boardgameEntity) => this.boardgameConverter.entityToOutput(boardgameEntity));
     return boargames;
   }
 
   async delete(id: number): Promise<BoardgameOutput> {
-    let boardgameEntity = await this.boardgameRepository.findOne(id);
+    const boardgameEntity = await this.boardgameRepository.findOne(id);
     throwIfUndefined(boardgameEntity, new NotFoundException());
-    let boardgameOuput = await this.boardgameConverter.entityToOutput(boardgameEntity);
-    await this.boardgameRepository.remove(boardgameEntity);
+    const boardgameOuput = await this.boardgameConverter.entityToOutput(boardgameEntity);
+    await this.boardgameRepository.removeAndFlush(boardgameEntity);
     return boardgameOuput;
   }
 
   async deleteBatch(ids: number[]): Promise<BoardgameOutput[]> {
-    let boardgameEntities = await this.boardgameRepository.findByIds(ids);
-    let boardgameOutputs = boardgameEntities.map(boardgameEntity => this.boardgameConverter.entityToOutput(boardgameEntity));
-    await this.boardgameRepository.remove(boardgameEntities)
+    const boardgameEntities = await this.boardgameRepository.find(ids);
+    const boardgameOutputs = boardgameEntities.map(boardgameEntity => this.boardgameConverter.entityToOutput(boardgameEntity));
+    await this.boardgameRepository.removeAndFlush(boardgameEntities)
     return boardgameOutputs;
   }
 
   async update(id: number, boardgameInput: BoardgameInput): Promise<BoardgameOutput> {
-    let boardgameEntityOld = await this.boardgameRepository.findOne(id);
-    throwIfUndefined(boardgameEntityOld, new NotFoundException());
-    let boardgameEntityNew = await this.boardgameConverter.inputToEntity(boardgameInput);
-    let boardgameEntityUpdated = Object.assign(boardgameEntityOld, boardgameEntityNew);
-    boardgameEntityUpdated = await this.boardgameRepository.save(boardgameEntityUpdated);
-    return this.boardgameConverter.entityToOutput(boardgameEntityUpdated);
+    const boardgameEntity = await this.boardgameRepository.findOne(id);
+    throwIfUndefined(boardgameEntity, new NotFoundException());
+    const boardgameEntityNew = await this.boardgameConverter.inputToEntity(boardgameInput);
+    wrap(boardgameEntity).assign(boardgameEntityNew);
+    await this.boardgameRepository.flush();
+    return this.boardgameConverter.entityToOutput(boardgameEntity);
   }
 
   async getLanguages(id: number): Promise<LanguageOutput[]> {
-    let languageEntities = await this.languageRepository.find({ where: { boardgameId: id } });
+    const languageEntities = await this.languageRepository.find({ id });
     return _.map(languageEntities, languageEntity => this.languageConverter.entityToOutput(languageEntity));
   }
 }

@@ -1,5 +1,5 @@
-import { Field, ID, ObjectType } from 'type-graphql';
 import { LanguageOutput } from '../../language/domain/language.output';
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class BoardgameOutput {
@@ -10,7 +10,7 @@ export class BoardgameOutput {
 
   @Field()
   name?: string;
-  
+
   @Field(() => [LanguageOutput])
   languages?: LanguageOutput[];
   

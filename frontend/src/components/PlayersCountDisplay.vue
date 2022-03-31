@@ -1,40 +1,33 @@
 <template>
   <div class="players-count-display">
 
-    <font-awesome-icon class="icon" icon="users"/>
+    <font-awesome-icon icon="users"/>
 
     {{playersCountString}}
 
   </div>
 </template>
 
-<script lang="ts">
-  import {Component, Prop, Vue} from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, PropType } from "vue";
 
-  @Component({
-    name: PlayersCountDisplay.tag
-  })
-  export class PlayersCountDisplay extends Vue {
-    static tag = 'PlayersCountDisplay';
-
-    @Prop()
-    playersCountMax!: number;
-    @Prop()
-    playersCountMin!: number;
-
-    get playersCountString(): string {
-      return this.playersCountMin === this.playersCountMax ? `${this.playersCountMin}` : `${this.playersCountMin} - ${this.playersCountMax}`;
-    }
+const props = defineProps({
+  playersCountMax: {
+    required: true,
+    type: Number as PropType<number>
+  },
+  playersCountMin: {
+    required: true,
+    type: Number as PropType<number>
   }
+});
 
-  export default PlayersCountDisplay;
+const playersCountString = computed<string>(() => {
+  return props.playersCountMin === props.playersCountMax ? `${props.playersCountMin}` : `${props.playersCountMin} - ${props.playersCountMax}`;
+})
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .players-count-display {
-
-    .icon {
-      margin-right: 0.2rem;
-    }
   }
 </style>

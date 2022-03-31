@@ -14,7 +14,10 @@ export class BoardgameConverter implements Converter<BoardgameInput, BoardgameOu
   async inputToEntity(input: BoardgameInput): Promise<BoardgameEntity> {
     let entity = new BoardgameEntity();
     entity.name = input.name;
-    entity.languages = await this.languageRepository.findByIds(input.languageIds)
+    const languages = await this.languageRepository.find({
+      id: { $in: input.languageIds }
+    });
+    entity.languages.add(...languages)
     entity.buyDate = input.buyDate;
     entity.playTimeMin = input.playTimeMin;
     entity.playTimeMax = input.playTimeMax;

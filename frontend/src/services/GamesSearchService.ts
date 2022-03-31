@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
-import {IGamesSearchParameters} from '@/interfaces/IGamesSearchParameters';
-import {IGame} from '@/interfaces/IGame';
-import {GamePredicate} from '@/interfaces/GamePredicate';
-import {GamesFilteringService} from '@/services/GamesFilteringService';
+import { GamesFilteringService } from "./GamesFilteringService";
+import { GamePredicate } from "../interfaces/GamePredicate";
+import { IGamesSearchParameters } from "../interfaces/IGamesSearchParameters";
+import { IGame } from "../interfaces/IGame";
 
 export class GamesSearchService {
 

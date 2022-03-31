@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {BggId} from '@/interfaces/types';
+import { BggId } from "../interfaces/types";
+import axios from "axios";
 
 export class BGGService {
 
@@ -7,7 +7,7 @@ export class BGGService {
 
   static async queryBggData(id: BggId): Promise<string> {
     return axios.get<string>(this.BGG_API_URL + 'thing', {params: {id}})
-      .then(response => response.data);
+        .then(response => response.data);
   }
 
   static async getImageForGame(id: BggId): Promise<string | null> {
